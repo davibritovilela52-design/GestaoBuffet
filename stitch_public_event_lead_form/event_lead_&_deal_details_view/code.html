@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Event Lead &amp; Deal Details View</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Manrope -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen">
+<div class="flex flex-col w-full h-full">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#f0f2f4] dark:border-slate-800 bg-white dark:bg-slate-900 px-6 lg:px-40 py-3">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-[#111418] dark:text-white">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined text-3xl">restaurant</span>
+</div>
+<h2 class="text-[#111418] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">BuffetCRM</h2>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-[#111418] dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Kanban</a>
+<a class="text-[#111418] dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Events</a>
+<a class="text-[#111418] dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Clients</a>
+<a class="text-[#111418] dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Reports</a>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-4 lg:gap-8">
+<label class="hidden sm:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-[#617589] flex border-none bg-[#f0f2f4] dark:bg-slate-800 items-center justify-center pl-4 rounded-l-lg" data-icon="search">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-[#f0f2f4] dark:bg-slate-800 dark:text-white focus:outline-0 focus:ring-0 h-full placeholder:text-[#617589] px-4 rounded-r-lg pl-2 text-base font-normal" placeholder="Search" value=""/>
+</div>
+</label>
+<div class="flex items-center gap-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-white dark:ring-slate-700" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB7YJSxSBXEZs86y135EM0_vcvvkofTT_IRBNZg0aFA9qDDa_m_PDyHPSz-Q3UzQrsL1iSaog82TUfeQO6sT2INR2t-hxei5PsR4OpSlSRmpd8N0xe8Io2ZHZbDNnaSDHtmpPU2U0ujbv50thZBcIjNI_xmxSo7qIYkfYvcuOTqtBRenyAEF7XKcHg-wGap5npX9waVg-elv9YzwadqWcLoywDQsQqpPZv61ov0CiBuEoqyhKU992Fpp5APNk19cg9RUoSEgqzeXVyb");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 px-4 lg:px-40 py-6">
+<div class="max-w-[1200px] mx-auto space-y-6">
+<!-- Breadcrumbs -->
+<nav class="flex flex-wrap gap-2 items-center">
+<a class="text-[#617589] dark:text-slate-400 text-sm font-medium hover:text-primary" href="#">Kanban Board</a>
+<span class="text-[#617589] text-sm">/</span>
+<a class="text-[#617589] dark:text-slate-400 text-sm font-medium hover:text-primary" href="#">Active Deals</a>
+<span class="text-[#617589] text-sm">/</span>
+<span class="text-[#111418] dark:text-white text-sm font-bold">Sarah Johnson's Wedding</span>
+</nav>
+<!-- Page Heading & Status Bar -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-[#f0f2f4] dark:border-slate-800 p-6">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="flex flex-col gap-1">
+<h1 class="text-[#111418] dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">Sarah Johnson</h1>
+<div class="flex items-center gap-2 text-[#617589] dark:text-slate-400">
+<span class="material-symbols-outlined text-lg">calendar_today</span>
+<p class="text-base font-normal">Event Date: October 24, 2023</p>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 rounded-lg h-10 px-4 bg-[#f0f2f4] dark:bg-slate-800 text-[#111418] dark:text-white text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-lg">edit</span>
+<span>Edit Deal</span>
+</button>
+<button class="flex items-center gap-2 rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold shadow-md shadow-primary/20 hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined text-lg">send</span>
+<span>Send Invoice</span>
+</button>
+</div>
+</div>
+<!-- Progress Bar Component -->
+<div class="mt-8 flex flex-col gap-3">
+<div class="flex gap-6 justify-between items-end">
+<div class="flex flex-col">
+<span class="text-[#617589] dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Current Stage</span>
+<p class="text-primary text-lg font-bold">Proposal Sent</p>
+</div>
+<p class="text-[#111418] dark:text-white text-sm font-bold bg-[#f0f2f4] dark:bg-slate-800 px-2 py-1 rounded">60% Complete</p>
+</div>
+<div class="h-2.5 w-full bg-[#dbe0e6] dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-500" style="width: 60%;"></div>
+</div>
+</div>
+</div>
+<!-- Grid Layout for Content -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Left Column: Details -->
+<div class="lg:col-span-2 space-y-6">
+<!-- Client Information Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-[#f0f2f4] dark:border-slate-800 overflow-hidden">
+<div class="px-6 py-4 border-b border-[#f0f2f4] dark:border-slate-800">
+<h3 class="text-[#111418] dark:text-white text-lg font-bold">Client Information</h3>
+</div>
+<div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="space-y-1">
+<p class="text-[#617589] dark:text-slate-400 text-xs font-semibold uppercase">Full Name</p>
+<p class="text-[#111418] dark:text-white font-medium">Sarah Johnson</p>
+</div>
+<div class="space-y-1">
+<p class="text-[#617589] dark:text-slate-400 text-xs font-semibold uppercase">WhatsApp</p>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-lg">chat</span>
+<a class="font-medium hover:underline" href="#">+1 (555) 012-3456</a>
+</div>
+</div>
+<div class="space-y-1 sm:col-span-2">
+<p class="text-[#617589] dark:text-slate-400 text-xs font-semibold uppercase">Email Address</p>
+<div class="flex items-center gap-2 text-[#111418] dark:text-white">
+<span class="material-symbols-outlined text-lg text-slate-400">mail</span>
+<p class="font-medium">sarah.j@example.com</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Event Details Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-[#f0f2f4] dark:border-slate-800 overflow-hidden">
+<div class="px-6 py-4 border-b border-[#f0f2f4] dark:border-slate-800">
+<h3 class="text-[#111418] dark:text-white text-lg font-bold">Event Details</h3>
+</div>
+<div class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="space-y-1">
+<p class="text-[#617589] dark:text-slate-400 text-xs font-semibold uppercase">Type</p>
+<p class="text-[#111418] dark:text-white font-medium">Wedding Reception</p>
+</div>
+<div class="space-y-1">
+<p class="text-[#617589] dark:text-slate-400 text-xs font-semibold uppercase">Guest Count</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-slate-400">group</span>
+<p class="text-[#111418] dark:text-white font-medium">150 People</p>
+</div>
+</div>
+<div class="space-y-1">
+<p class="text-[#617589] dark:text-slate-400 text-xs font-semibold uppercase">Times</p>
+<p class="text-[#111418] dark:text-white font-medium">18:00 - 23:30</p>
+</div>
+<div class="sm:col-span-2 lg:col-span-3 space-y-3">
+<p class="text-[#617589] dark:text-slate-400 text-xs font-semibold uppercase">Services Included</p>
+<div class="flex flex-wrap gap-2">
+<span class="bg-primary/10 text-primary text-xs font-bold px-3 py-1.5 rounded-full">Full Buffet</span>
+<span class="bg-primary/10 text-primary text-xs font-bold px-3 py-1.5 rounded-full">Open Bar (Premium)</span>
+<span class="bg-primary/10 text-primary text-xs font-bold px-3 py-1.5 rounded-full">Waitstaff (10x)</span>
+<span class="bg-primary/10 text-primary text-xs font-bold px-3 py-1.5 rounded-full">Cake Cutting Service</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Admin: Participation Requests -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-[#f0f2f4] dark:border-slate-800 overflow-hidden">
+<div class="px-6 py-4 border-b border-[#f0f2f4] dark:border-slate-800 flex justify-between items-center">
+<h3 class="text-[#111418] dark:text-white text-lg font-bold">Participation Requests</h3>
+<span class="bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 text-[10px] font-bold uppercase px-2 py-0.5 rounded">3 New Requests</span>
+</div>
+<div class="divide-y divide-[#f0f2f4] dark:divide-slate-800">
+<!-- Request Item 1 -->
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-cover" data-alt="Employee avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBJta-uI7G9mVywjDTu_xjfOu180-ZnaSeqLektwkg1xn5pehtj4Yhkwek75b1dqBzwjrtGa410R_aHpDMlXpJjBdRwOXux38Y46SMk9Y0B53-fmi6YJxJeXUuWsG2cRx3C0oMXC4CB1ajGqUjbWiNaCGKMfapo3fVzEYINZAVFTXGmw3VoMWEevfZNPYPmDo9uZ25fYKt-0uDKkSzFN7Uln9hbZtkLBXCvuixZkwxgABROouka3CwwYmxIdJ0UTot5a6KQi8pVUYGx");'></div>
+<div>
+<p class="text-[#111418] dark:text-white font-bold">Michael Chen</p>
+<p class="text-[#617589] dark:text-slate-400 text-xs">Head Waiter • Applied Oct 12</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center justify-center p-2 rounded-lg border border-red-200 dark:border-red-900/50 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+<button class="flex items-center justify-center p-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-sm transition-colors">
+<span class="material-symbols-outlined text-xl">check</span>
+</button>
+</div>
+</div>
+<!-- Request Item 2 -->
+<div class="p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-cover" data-alt="Employee avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBHvW8_YCAp-ThzqiuDGFSpGt-yohBGGTED0ssOX1lbHl358DYKd3g1PF1hGhU_tnFKsIN5xYybMA7L5QpNweTgCqMNMIvrRCwQBBHBSm946AVY5miwBNw14jeBJDs1YUG6KT5h5jObDJ-U_aTAqV0OFI2_Op2RowAwEOpfpU-yjbTq9lvXpYh6fMm0Fb9HiUZAHeje6hDQ8YQsH6neHGvpXzE62wjT56Cz8eywvlPg6zT4Dpv9wLNUmwYUyzSZE7bzYNnaC__pVVWi");'></div>
+<div>
+<p class="text-[#111418] dark:text-white font-bold">Emma Wilson</p>
+<p class="text-[#617589] dark:text-slate-400 text-xs">Bartender • Applied Oct 14</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center justify-center p-2 rounded-lg border border-red-200 dark:border-red-900/50 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+<button class="flex items-center justify-center p-2 rounded-lg bg-green-500 text-white hover:bg-green-600 shadow-sm transition-colors">
+<span class="material-symbols-outlined text-xl">check</span>
+</button>
+</div>
+</div>
+</div>
+<div class="p-3 bg-slate-50 dark:bg-slate-800/30 text-center">
+<button class="text-primary text-sm font-bold hover:underline">View All 12 Applicants</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Meta & Sidebar Info -->
+<div class="space-y-6">
+<!-- Employee: My Status Card -->
+<div class="bg-primary/5 dark:bg-primary/10 rounded-xl p-6 border border-primary/20">
+<h4 class="text-primary text-sm font-black uppercase tracking-widest mb-4">Your Application</h4>
+<div class="flex items-center gap-4 mb-4">
+<div class="size-12 rounded-full flex items-center justify-center bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-2xl">hourglass_empty</span>
+</div>
+<div>
+<p class="text-[#111418] dark:text-white font-bold">Status: Pending</p>
+<p class="text-[#617589] dark:text-slate-400 text-xs">Applied on Oct 15, 2023</p>
+</div>
+</div>
+<p class="text-[#617589] dark:text-slate-400 text-sm mb-4 leading-relaxed">The event manager is reviewing your profile. You'll be notified via WhatsApp once a decision is made.</p>
+<button class="w-full py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-bold text-[#111418] dark:text-white hover:bg-slate-50 transition-colors">
+                                Withdraw Request
+                            </button>
+</div>
+<!-- Assigned Employees (Avatar Stack) -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-[#f0f2f4] dark:border-slate-800 p-6">
+<h3 class="text-[#111418] dark:text-white text-base font-bold mb-4">Assigned Team (8/12)</h3>
+<div class="flex -space-x-3 overflow-hidden mb-4">
+<div class="inline-block size-10 rounded-full ring-2 ring-white dark:ring-slate-900 bg-cover" data-alt="Team member" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAWP7DcKkFVkjKjSvG5h94vK7YRCobD5xESNx7YnnTTPMx-K6lYqL7ErILGrkKugZ20ag0rfi6fBnAOLPmcMPWoCtB8MGymwtqUBmAOqQEU_rHgMaNM86oWrFft0sGinguG0xsfPRlQt3Y2nIJR3uETI_-HdpieEvvEcDF4CvJ149aP7tcgLDmutCOws1hY1yciB0XSlaDXNhx25OiIHCNlN2zNDt5mKpL27zEHlx2CqtvSNzZ0c3AjIzQj7cU0RJvhBCd3nxPgwG_9");'></div>
+<div class="inline-block size-10 rounded-full ring-2 ring-white dark:ring-slate-900 bg-cover" data-alt="Team member" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDIQ3WjKQ6jh51E4hHoz8InkU0h2sIS2mxyPZFzDOsTZTl45Tz9Hx9xQUOrg-fbuRggAL4ABgw_zbXPWRz1Xf6YFBhsF4Zi1KZ8oMVdDvufVZyEGlCmNGsJB1E64FJ3WEgSauUGNHRGOLDF2lPwm6T57WoPA6OEPHb4Tz2Ssz72j58tXTzwe1MgMSldAOMXwUiv4JzlsHY3Wfu1-N8TFzf003utjp-nYokNUUhGj5SdvpJ5UxX3BMfbT-7oVY8BCMS7RCdL363sM3tO");'></div>
+<div class="inline-block size-10 rounded-full ring-2 ring-white dark:ring-slate-900 bg-cover" data-alt="Team member" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB9KNJYEcwMkE5-RgpiBb-8EPdxvpUtSzGHB7j1W49Y9tSyIp9Pcpa3PiTabCqhEZ_dauzn_Cyl9vLMCsP-YTHe7AeeBuqZ5RaBs0rLltLCMB3VWZ8XsoAzSuZ-GEsVKpJ-gf6jmFw9WGA9LrlqiHJ8YBpzI9uFkTroJGDwz8OpIJGhg5CtSy01_W9UJce-Dc_1jMR3M-vetSSc_uP6VuHV9p7l6YGrPq3VY0fQJBJIjwF84QP8mTzR1G4VzT_xJ9xN67qpBaAXkUZ4");'></div>
+<div class="inline-block size-10 rounded-full ring-2 ring-white dark:ring-slate-900 bg-cover" data-alt="Team member" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDSEoUwTjzZSl7-XnMXaWqXlzIf3fiCG2gMWFnzsEFCq52PPYoGWZJ1jHBKwLxf_qDMNDZvhdHmtnlKtXRdzCww4ONPkz1nr42JOLvuyJ0Yb0bytEPHGYiXA29Dh6kR77s3IRBRo6sZYTDxMrT1hlrTq6oYtjRqOhqTf7Djxeg0dOe_1J8vHB181sqB_j9mPy22woqhAcsDM_E-TEN8ocPe0AIeDCZMqYZRPbFKfWKoqLt9Ae1YKKKXx6LH1tvZKFYv8xEcZEM_SMqS");'></div>
+<div class="inline-block size-10 rounded-full ring-2 ring-white dark:ring-slate-900 bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-500">+4</div>
+</div>
+<button class="w-full text-center py-2 text-sm text-primary font-bold hover:bg-primary/5 rounded-lg transition-colors">Manage Assignments</button>
+</div>
+<!-- Quick Info Metadata -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-[#f0f2f4] dark:border-slate-800 p-6 space-y-4">
+<div class="flex flex-col gap-1">
+<p class="text-[#617589] dark:text-slate-400 text-xs font-semibold uppercase">Assigned Manager</p>
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-cover" data-alt="Manager avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCyCp1P1sLwGQOhLhXKx1hVb8D9O8OPF386p7kRi-egbSzQNJMoXO_uZkzPAUN_vkVFamzEZ58ylnBnWDsomYUN5dXlUb4rBNhb1VYVAgJVX-3WCTVGfBaSXyTPxZZp7-VgTw6hukX1L6bce7UFOoMXqQ2GvARhRIfm_AJF0al505pVHrFqcBgxzLPbBDktffDNhiiWp73S9BIXHlaJK6GF0flQ1b73Ov_XTijpDxUChM8mF60zbnxNmnW4IHSb4IdpU4P46kH_0Qi9");'></div>
+<p class="text-[#111418] dark:text-white text-sm font-medium">David Miller</p>
+</div>
+</div>
+<div class="pt-4 border-t border-[#f0f2f4] dark:border-slate-800 flex flex-col gap-3">
+<div class="flex justify-between text-sm">
+<span class="text-[#617589] dark:text-slate-400">Created Date</span>
+<span class="text-[#111418] dark:text-white font-medium">Sep 12, 2023</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-[#617589] dark:text-slate-400">Last Updated</span>
+<span class="text-[#111418] dark:text-white font-medium">2 hours ago</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-[#617589] dark:text-slate-400">Deal Value</span>
+<span class="text-green-600 font-bold">$12,450.00</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

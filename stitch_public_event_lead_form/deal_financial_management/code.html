@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Deal Financial Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white transition-colors duration-200">
+<div class="relative flex min-h-screen flex-col">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 flex items-center justify-between border-b border-solid border-[#dbe0e6] dark:border-[#2a3441] bg-white dark:bg-[#111418] px-10 py-3">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z"></path>
+</svg>
+</div>
+<h2 class="text-[#111418] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Buffet Staffing</h2>
+</div>
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-[#111418] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary pb-1" href="#">Deals</a>
+<a class="text-[#111418] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#">Staff</a>
+<a class="text-[#111418] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#">Schedule</a>
+<a class="text-[#111418] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-gray-400">search</span>
+<input class="bg-[#f0f2f4] dark:bg-[#202936] border-none rounded-lg pl-10 pr-4 py-2 text-sm w-64 focus:ring-2 focus:ring-primary outline-none" placeholder="Search transactions..."/>
+</div>
+<div class="flex items-center gap-2">
+<div class="bg-primary/10 p-1 rounded-full">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8" data-alt="Corporate professional user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC5vTiTbr2bh__91hSBQq_Jjv9jhXsL9URD70WXBbNZQWy2oBPz_imxG25qv749LoFM858VHxuqvZ5ZmvBjmXtKyd6-5-N4ff5c7F9_X05feGbCOFBMF85dy4ss_jhZkmPL7dQdZaFd8js33Xf-ugY4ltEEgNIj2V8GblZI-bx1fuxopPQ08ApaH6hgQIKWpiCp9vvqUMLOqwcIYSgQAAZxE1gd6hqjvCXQ9fRxFzRQ3ZmlOOFROt1IzIatV2Zr1s1mGuWistvpD3WB");'></div>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-bold">Admin User</span>
+<span class="text-[10px] text-gray-500">Administrator</span>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 px-10 py-8">
+<div class="mx-auto max-w-6xl">
+<!-- Page Heading & Deal Selector -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8">
+<div class="space-y-4">
+<div class="flex flex-col gap-1">
+<h1 class="text-[#111418] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Deal Financials</h1>
+<p class="text-gray-500 dark:text-gray-400 text-base">Analyze performance and manage revenue for specific buffet events</p>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-gray-600 dark:text-gray-300">Select Active Deal</label>
+<div class="relative w-full md:w-80">
+<select class="appearance-none w-full bg-white dark:bg-[#1c2632] border border-[#dbe0e6] dark:border-[#2a3441] rounded-lg px-4 py-3 pr-10 text-base font-semibold focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all">
+<option value="1">Grand Ballroom Gala - Oct 2023</option>
+<option value="2">Corporate Tech Summit Buffet</option>
+<option value="3">Wedding Reception - Downtown Loft</option>
+<option value="4">Summer Garden Party 2024</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">unfold_more</span>
+</div>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 rounded-lg bg-[#f0f2f4] dark:bg-[#202936] px-4 py-2.5 text-sm font-bold hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                            Export Report
+                        </button>
+<button class="flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                            Add Entry
+                        </button>
+</div>
+</div>
+<!-- Stats Summary -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+<div class="flex flex-col gap-3 rounded-xl p-6 bg-white dark:bg-[#1c2632] border border-[#dbe0e6] dark:border-[#2a3441] shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-gray-500 dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Total Income</p>
+<span class="material-symbols-outlined text-green-500 bg-green-50 dark:bg-green-500/10 p-2 rounded-lg">payments</span>
+</div>
+<p class="text-[#111418] dark:text-white tracking-tight text-3xl font-extrabold">$24,850.00</p>
+<div class="flex items-center gap-1.5 text-green-600 dark:text-green-400 text-sm font-bold">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+12.5% from projection</span>
+</div>
+</div>
+<div class="flex flex-col gap-3 rounded-xl p-6 bg-white dark:bg-[#1c2632] border border-[#dbe0e6] dark:border-[#2a3441] shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-gray-500 dark:text-gray-400 text-sm font-semibold uppercase tracking-wider">Total Expenses</p>
+<span class="material-symbols-outlined text-red-500 bg-red-50 dark:bg-red-500/10 p-2 rounded-lg">receipt_long</span>
+</div>
+<p class="text-[#111418] dark:text-white tracking-tight text-3xl font-extrabold">$14,230.50</p>
+<div class="flex items-center gap-1.5 text-red-600 dark:text-red-400 text-sm font-bold">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+4.2% on labor costs</span>
+</div>
+</div>
+<div class="flex flex-col gap-3 rounded-xl p-6 bg-primary/10 border border-primary/20 dark:border-primary/40 shadow-sm">
+<div class="flex items-center justify-between">
+<p class="text-primary dark:text-primary font-bold text-sm uppercase tracking-wider">Net Result</p>
+<span class="material-symbols-outlined text-primary bg-white dark:bg-[#111418] p-2 rounded-lg">account_balance_wallet</span>
+</div>
+<p class="text-primary tracking-tight text-3xl font-extrabold">$10,619.50</p>
+<div class="flex items-center gap-1.5 text-primary text-sm font-bold">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>Profitable Event</span>
+</div>
+</div>
+</div>
+<!-- Ledger Table -->
+<div class="bg-white dark:bg-[#1c2632] rounded-xl border border-[#dbe0e6] dark:border-[#2a3441] overflow-hidden shadow-sm">
+<div class="px-6 py-5 border-b border-[#dbe0e6] dark:border-[#2a3441] flex items-center justify-between">
+<h2 class="text-xl font-bold tracking-tight">Financial Entry Ledger</h2>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-gray-500">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-[#f8f9fa] dark:bg-[#111418] text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-wider">
+<tr>
+<th class="px-6 py-4">Date</th>
+<th class="px-6 py-4">Type</th>
+<th class="px-6 py-4">Category</th>
+<th class="px-6 py-4">Description</th>
+<th class="px-6 py-4 text-right">Amount</th>
+<th class="px-6 py-4 text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#dbe0e6] dark:divide-[#2a3441]">
+<tr class="hover:bg-gray-50 dark:hover:bg-[#202936] transition-colors">
+<td class="px-6 py-4 text-sm font-medium">Oct 24, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-green-100 dark:bg-green-500/20 px-2 py-1 text-xs font-bold text-green-700 dark:text-green-400">
+<span class="size-1.5 rounded-full bg-green-600"></span>
+                                            Income
+                                        </span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300 font-semibold">Client Payment</td>
+<td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Final deposit for Grand Ballroom Gala</td>
+<td class="px-6 py-4 text-right text-sm font-extrabold text-[#111418] dark:text-white">$12,000.00</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center gap-2">
+<button class="p-1.5 text-gray-400 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-1.5 text-gray-400 hover:text-red-500 transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-[#202936] transition-colors">
+<td class="px-6 py-4 text-sm font-medium">Oct 22, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-red-100 dark:bg-red-500/20 px-2 py-1 text-xs font-bold text-red-700 dark:text-red-400">
+<span class="size-1.5 rounded-full bg-red-600"></span>
+                                            Expense
+                                        </span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300 font-semibold">Labor</td>
+<td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Waitstaff wages (12 staff x 8h)</td>
+<td class="px-6 py-4 text-right text-sm font-extrabold text-[#111418] dark:text-white">$4,800.00</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center gap-2">
+<button class="p-1.5 text-gray-400 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-1.5 text-gray-400 hover:text-red-500 transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-[#202936] transition-colors">
+<td class="px-6 py-4 text-sm font-medium">Oct 21, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-red-100 dark:bg-red-500/20 px-2 py-1 text-xs font-bold text-red-700 dark:text-red-400">
+<span class="size-1.5 rounded-full bg-red-600"></span>
+                                            Expense
+                                        </span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300 font-semibold">Ingredients</td>
+<td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Fresh seafood and premium meats order</td>
+<td class="px-6 py-4 text-right text-sm font-extrabold text-[#111418] dark:text-white">$3,250.40</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center gap-2">
+<button class="p-1.5 text-gray-400 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-1.5 text-gray-400 hover:text-red-500 transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-[#202936] transition-colors">
+<td class="px-6 py-4 text-sm font-medium">Oct 20, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-red-100 dark:bg-red-500/20 px-2 py-1 text-xs font-bold text-red-700 dark:text-red-400">
+<span class="size-1.5 rounded-full bg-red-600"></span>
+                                            Expense
+                                        </span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-300 font-semibold">Logistics</td>
+<td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">Refrigerated truck rental (2 days)</td>
+<td class="px-6 py-4 text-right text-sm font-extrabold text-[#111418] dark:text-white">$850.00</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center gap-2">
+<button class="p-1.5 text-gray-400 hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-1.5 text-gray-400 hover:text-red-500 transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 bg-[#f8f9fa] dark:bg-[#111418] border-t border-[#dbe0e6] dark:border-[#2a3441] flex items-center justify-between">
+<span class="text-xs text-gray-500 font-bold uppercase">Showing 4 of 12 entries</span>
+<div class="flex items-center gap-4">
+<button class="text-sm font-bold text-gray-500 hover:text-primary disabled:opacity-50" disabled="">Previous</button>
+<div class="flex gap-1">
+<button class="size-8 rounded bg-primary text-white text-xs font-bold">1</button>
+<button class="size-8 rounded hover:bg-gray-200 dark:hover:bg-gray-800 text-xs font-bold">2</button>
+<button class="size-8 rounded hover:bg-gray-200 dark:hover:bg-gray-800 text-xs font-bold">3</button>
+</div>
+<button class="text-sm font-bold text-gray-500 hover:text-primary">Next</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="mt-auto px-10 py-6 border-t border-[#dbe0e6] dark:border-[#2a3441] text-center text-gray-500 dark:text-gray-400 text-xs font-medium">
+            © 2024 Buffet Staffing Solutions. Financial reports generated on Oct 27, 2023.
+        </footer>
+</div>
+</body></html>

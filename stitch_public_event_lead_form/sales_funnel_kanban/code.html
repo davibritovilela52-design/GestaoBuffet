@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sales Funnel Kanban | Buffet Staffing Manager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+        .kanban-column {
+            min-width: 300px;
+            max-width: 350px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111418] dark:text-white transition-colors duration-200">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header / TopNavBar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#dbe0e6] dark:border-[#2d3a4d] bg-white dark:bg-background-dark px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-[#111418] dark:text-white">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined !text-3xl">restaurant</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Buffet Staffing Manager</h2>
+</div>
+<label class="flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-[#617589] flex border-none bg-[#f0f2f4] dark:bg-[#1e293b] items-center justify-center pl-4 rounded-l-lg">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-[#f0f2f4] dark:bg-[#1e293b] text-[#111418] dark:text-white focus:ring-0 h-full placeholder:text-[#617589] rounded-r-lg pl-2 text-base font-normal" placeholder="Search leads..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<nav class="flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-bold border-b-2 border-primary text-primary" href="#">Kanban</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Calendar</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Employees</a>
+</nav>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-[#1e293b] text-[#111418] dark:text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-[#1e293b] text-[#111418] dark:text-white">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-[#dbe0e6] dark:border-[#2d3a4d]" data-alt="Professional headshot of the system administrator" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD1S0IVg8e4K6hWo5tVvsUb3sqrBTiOS3IJaGLJ51ONkuXNpXnYxCr3oght_1E4S5MFmTrHsQsQaTVNWSx4q-jWtCRAsaWxf7TReHrDc0weHaWUjV6cV5QPN-knaJP8XuMMctP9Q9iCS5h9yOLmOrEVT4a3_0FqePNGlRZk6crWlk9wpSlB4dvpI6BFf5MiI6pcXBTJAXRqAkDMRevPY7I9poLQ4NzyfIJorLN5vE_2RqDQ7lGD8AkK6zOmt3opBv6CCcsfjV2lIErb");'></div>
+</div>
+</header>
+<main class="flex flex-1 flex-col px-10 py-6 max-w-[1600px] mx-auto w-full">
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between items-end gap-3 mb-6">
+<div class="flex min-w-72 flex-col gap-1">
+<h1 class="text-3xl font-black leading-tight tracking-[-0.033em]">Sales Funnel Kanban</h1>
+<p class="text-[#617589] dark:text-[#94a3b8] text-base font-normal">Manage and track event staffing leads through the conversion pipeline.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg h-10 px-4 bg-[#f0f2f4] dark:bg-[#1e293b] text-[#111418] dark:text-white text-sm font-bold">
+<span class="material-symbols-outlined mr-2">filter_list</span> Filter
+                    </button>
+<button class="flex items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined mr-2">add</span> Add New Lead
+                    </button>
+</div>
+</div>
+<!-- View Toggle Tabs -->
+<div class="mb-6">
+<div class="flex border-b border-[#dbe0e6] dark:border-[#2d3a4d] gap-8">
+<a class="flex items-center gap-2 border-b-[3px] border-primary text-primary pb-3 pt-2" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<p class="text-sm font-bold tracking-[0.015em]">Admin View</p>
+</a>
+<a class="flex items-center gap-2 border-b-[3px] border-transparent text-[#617589] dark:text-[#94a3b8] pb-3 pt-2 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<p class="text-sm font-bold tracking-[0.015em]">Employee View</p>
+</a>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-3 mb-6 flex-wrap">
+<button class="flex h-9 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-[#1e293b] border border-[#dbe0e6] dark:border-[#2d3a4d] px-4">
+<p class="text-sm font-medium">All Event Types</p>
+<span class="material-symbols-outlined">keyboard_arrow_down</span>
+</button>
+<button class="flex h-9 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-[#1e293b] border border-[#dbe0e6] dark:border-[#2d3a4d] px-4">
+<p class="text-sm font-medium">This Month</p>
+<span class="material-symbols-outlined">keyboard_arrow_down</span>
+</button>
+<button class="flex h-9 items-center justify-center gap-x-2 rounded-full bg-primary/10 text-primary px-4 border border-primary/20">
+<p class="text-sm font-bold">High Priority</p>
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Kanban Board -->
+<div class="flex gap-6 overflow-x-auto pb-6">
+<!-- Column: Lead -->
+<div class="kanban-column flex flex-col gap-4 bg-[#eff1f3] dark:bg-[#1a2431] p-3 rounded-xl min-h-[600px] w-full">
+<div class="flex items-center justify-between px-2 py-1">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-blue-500"></div>
+<h3 class="font-bold text-sm uppercase tracking-wider text-[#617589] dark:text-[#94a3b8]">Lead</h3>
+<span class="bg-[#dbe0e6] dark:bg-[#2d3a4d] px-2 py-0.5 rounded text-[10px] font-bold">3</span>
+</div>
+<button class="text-[#617589] hover:text-primary"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<!-- Card 1 -->
+<div class="bg-white dark:bg-background-dark p-4 rounded-lg shadow-sm border border-[#dbe0e6] dark:border-[#2d3a4d] flex flex-col gap-3 group cursor-grab active:cursor-grabbing">
+<div class="flex justify-between items-start">
+<span class="bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Corporate</span>
+<span class="material-symbols-outlined text-[#dbe0e6] group-hover:text-[#617589] transition-colors">drag_indicator</span>
+</div>
+<div>
+<h4 class="font-bold text-base leading-tight">TechNova Solutions Q4 Gala</h4>
+<div class="flex items-center gap-1.5 mt-2 text-[#617589] dark:text-[#94a3b8] text-xs">
+<span class="material-symbols-outlined !text-sm">calendar_today</span>
+<span>Dec 15, 2023</span>
+</div>
+<div class="flex items-center gap-1.5 mt-1 text-[#617589] dark:text-[#94a3b8] text-xs">
+<span class="material-symbols-outlined !text-sm">groups</span>
+<span>450 Guests</span>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-3 border-t border-[#f0f2f4] dark:border-[#1e293b]">
+<div class="flex -space-x-2">
+<div class="w-7 h-7 rounded-full border-2 border-white dark:border-background-dark bg-cover" data-alt="Staff avatar 1" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAPdxN9C8KmywFSMZzBJjoKOL_Pio2GsgsubhRxgEyCQNg4szk-pX5esK10YYiUO4J5NQnFIVmvxDD7Rj1FWWmxquijDCthfxod8WXlXHt6WnacM2CdmuXGtU2fJ4IxTYHCmSG-Iqt5rfzij-ExgUGhBStSQjPxyS4ZFGSayVihKLbIOUFN9TWiVgrbd9BPcNi57qoEaTxmELi3NCTxPqFGdC75J1Dsej80PD68hZMd6hebkRQXpzlVbWwcnOTHMHS8MocvM8RS_vbq')"></div>
+<div class="w-7 h-7 rounded-full border-2 border-white dark:border-background-dark bg-cover" data-alt="Staff avatar 2" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDZQcTB-qDl-e84wsi2tq8cXXpC-B5HnPOjl6vnVspy7zb4dTK6enz7LqTcNPLyPGr3iMu6TzdCiEs2pskpYhaOls1quJyO6ybO-WnV7IKZ-EWa53QFrArrk4R52zm1I_EjRDetv1tXWhYBLebHbTL7TeLI-tAoUOkXAfDXkp1U2W7dJ_6c-J_Ta6py5UPnh-594Se9KVRVK5Jw43zQs1Ay8YDqMFR8IjqOWQbqR5mr5OQ3M1G_-RepB0AS5PYPTHkLVlfXsP5eqsBy')"></div>
+<div class="w-7 h-7 rounded-full border-2 border-white dark:border-background-dark bg-gray-200 flex items-center justify-center text-[10px] font-bold">+2</div>
+</div>
+<button class="text-xs font-bold text-primary border border-primary/30 px-3 py-1.5 rounded-lg hover:bg-primary hover:text-white transition-colors">
+                                Request Participation
+                            </button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-background-dark p-4 rounded-lg shadow-sm border border-[#dbe0e6] dark:border-[#2d3a4d] flex flex-col gap-3 group cursor-grab">
+<div class="flex justify-between items-start">
+<span class="bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Wedding</span>
+<span class="material-symbols-outlined text-[#dbe0e6] group-hover:text-[#617589]">drag_indicator</span>
+</div>
+<div>
+<h4 class="font-bold text-base leading-tight">Miller &amp; Thompson Wedding</h4>
+<div class="flex items-center gap-1.5 mt-2 text-[#617589] dark:text-[#94a3b8] text-xs">
+<span class="material-symbols-outlined !text-sm">calendar_today</span>
+<span>Oct 22, 2023</span>
+</div>
+<div class="flex items-center gap-1.5 mt-1 text-[#617589] dark:text-[#94a3b8] text-xs">
+<span class="material-symbols-outlined !text-sm">groups</span>
+<span>180 Guests</span>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-3 border-t border-[#f0f2f4] dark:border-[#1e293b]">
+<div class="flex -space-x-2">
+<div class="w-7 h-7 rounded-full border-2 border-white dark:border-background-dark bg-cover" data-alt="Staff avatar 3" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCKHepsOrbWTngLwBKfbB6TzgRNM-Zwu8Tr3MD7vwL5AkDjjWw56pidHo0r04Tp6VJD7_WXLzuSQCtTlEtr8-p-EDJTe8E_jcH_u4UJXTR4lcnGQZuLdzDV-pNlXvIDQGNnEpvn2bNoteh7_5Ufp73zLrVuEsJDkotwvpUYt1YBFLrDabSM6b6_YsANRz0J_kpDoKJl3HVKuMUVM3G9ld4d8-M6J-w7b3kXBuZDYLZb7P9p85A_DiQgLCRtuI8m3U_BaJ54RYH3vRbf')"></div>
+</div>
+<button class="text-xs font-bold text-primary border border-primary/30 px-3 py-1.5 rounded-lg hover:bg-primary hover:text-white transition-colors">
+                                Request Participation
+                            </button>
+</div>
+</div>
+</div>
+<!-- Column: In Negotiation -->
+<div class="kanban-column flex flex-col gap-4 bg-[#eff1f3] dark:bg-[#1a2431] p-3 rounded-xl min-h-[600px] w-full">
+<div class="flex items-center justify-between px-2 py-1">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+<h3 class="font-bold text-sm uppercase tracking-wider text-[#617589] dark:text-[#94a3b8]">In Negotiation</h3>
+<span class="bg-[#dbe0e6] dark:bg-[#2d3a4d] px-2 py-0.5 rounded text-[10px] font-bold">1</span>
+</div>
+<button class="text-[#617589] hover:text-primary"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="bg-white dark:bg-background-dark p-4 rounded-lg shadow-sm border border-[#dbe0e6] dark:border-[#2d3a4d] flex flex-col gap-3 group cursor-grab">
+<div class="flex justify-between items-start">
+<span class="bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Private Party</span>
+<span class="material-symbols-outlined text-[#dbe0e6] group-hover:text-[#617589]">drag_indicator</span>
+</div>
+<div>
+<h4 class="font-bold text-base leading-tight">50th Anniversary Dinner</h4>
+<div class="flex items-center gap-1.5 mt-2 text-[#617589] dark:text-[#94a3b8] text-xs">
+<span class="material-symbols-outlined !text-sm">calendar_today</span>
+<span>Nov 05, 2023</span>
+</div>
+<div class="flex items-center gap-1.5 mt-1 text-[#617589] dark:text-[#94a3b8] text-xs">
+<span class="material-symbols-outlined !text-sm">groups</span>
+<span>45 Guests</span>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-3 border-t border-[#f0f2f4] dark:border-[#1e293b]">
+<div class="flex -space-x-2">
+<div class="w-7 h-7 rounded-full border-2 border-white dark:border-background-dark bg-cover" data-alt="Staff avatar 4" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAHEJdeIm7KJK2mo4AGhxlio_MUFuBqBPsFNZaQI1LTOgGSY-sCsAHUxbxiyekAk_Hj9JMoCd4ykkCaJa4UJZybwHtEn5PRERzXN6ZmzZsrJUkIfDy2wX19X_Gx_8z-WIE67UO4qbnejTyNlPwT8FKAr381Vqqd_8cyPC-RbKGhJqJQvHHfiipYZMaXeHK5opeZTVrvNip8UF71ruYftx_LhuGIBeZ0vHICM4WX6U32RCl1GLW13GMsAhQbBh-M4pg6eqPdfHQ-BVyJ')"></div>
+</div>
+<button class="text-xs font-bold text-primary border border-primary/30 px-3 py-1.5 rounded-lg hover:bg-primary hover:text-white transition-colors">
+                                Request Participation
+                            </button>
+</div>
+</div>
+</div>
+<!-- Column: Closed -->
+<div class="kanban-column flex flex-col gap-4 bg-[#eff1f3] dark:bg-[#1a2431] p-3 rounded-xl min-h-[600px] w-full">
+<div class="flex items-center justify-between px-2 py-1">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-green-500"></div>
+<h3 class="font-bold text-sm uppercase tracking-wider text-[#617589] dark:text-[#94a3b8]">Closed</h3>
+<span class="bg-[#dbe0e6] dark:bg-[#2d3a4d] px-2 py-0.5 rounded text-[10px] font-bold">1</span>
+</div>
+<button class="text-[#617589] hover:text-primary"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="bg-white dark:bg-background-dark p-4 rounded-lg shadow-sm border border-[#dbe0e6] dark:border-[#2d3a4d] flex flex-col gap-3 group cursor-grab opacity-90">
+<div class="flex justify-between items-start">
+<span class="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Charity Gala</span>
+<span class="material-symbols-outlined text-[#dbe0e6] group-hover:text-[#617589]">drag_indicator</span>
+</div>
+<div>
+<h4 class="font-bold text-base leading-tight">Red Cross Fundraiser</h4>
+<div class="flex items-center gap-1.5 mt-2 text-[#617589] dark:text-[#94a3b8] text-xs">
+<span class="material-symbols-outlined !text-sm">calendar_today</span>
+<span>Oct 12, 2023</span>
+</div>
+<div class="flex items-center gap-1.5 mt-1 text-[#617589] dark:text-[#94a3b8] text-xs text-green-600 dark:text-green-400 font-bold">
+<span class="material-symbols-outlined !text-sm">check_circle</span>
+<span>Fully Staffed</span>
+</div>
+</div>
+<div class="flex items-center justify-between mt-2 pt-3 border-t border-[#f0f2f4] dark:border-[#1e293b]">
+<div class="flex -space-x-2">
+<div class="w-7 h-7 rounded-full border-2 border-white dark:border-background-dark bg-cover" data-alt="Staff avatar 5" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCCAj0w2SZyOVbgbXMSxIQ_aV0WXKH51kqCtBra8oz6y8AxaG3HuZg3kp1wLeTWKg9lS4qXoz5dx8wu-nkOXWepZnf5fc8Kv-6dgjamLej0R6aGPqEfG4zCoCo1lT56cqfMMQ0VSM3Z-KMlXFqB9IpQpl_THSSkFaCir7eiA42oDqwvljg-7AlC6Oiudwz4OqZVJiig1A9_9l92XkG0y4Q9pAbdSBRuGpL8_2BLKfaI4AtUC5qDZi46SULT3IXFRzF-aQ1IXJZfiRMr')"></div>
+<div class="w-7 h-7 rounded-full border-2 border-white dark:border-background-dark bg-cover" data-alt="Staff avatar 6" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDaLx6TD_Rgn0wKIYA_In8T4L16zm8A2tw9ToxBCPFhCjN_exL_F-RL5P1POb8HVaZecIxvScwHyS5R5qBfpcX0qPz8w0lUELAXaGUqzS2YQ4Xs8s4HunPcUGV8RCga2oIadBcu2fzMPpdD1iqLgDHngufFnbuN23KVil59G8jmHY9u9oekDrVtSTmLQfA_Es_WLY0RbHbV-gua3ytcHTeGcx5ewVnuJ8Fqr2l-270j5m-xyw5DBBc5JIbqSwuxrflTHM7zp4RQu9JO')"></div>
+</div>
+<span class="text-[10px] font-bold text-[#617589]">Staffing Complete</span>
+</div>
+</div>
+</div>
+<!-- Column: Lost -->
+<div class="kanban-column flex flex-col gap-4 bg-[#eff1f3] dark:bg-[#1a2431] p-3 rounded-xl min-h-[600px] w-full">
+<div class="flex items-center justify-between px-2 py-1">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-red-400"></div>
+<h3 class="font-bold text-sm uppercase tracking-wider text-[#617589] dark:text-[#94a3b8]">Lost</h3>
+<span class="bg-[#dbe0e6] dark:bg-[#2d3a4d] px-2 py-0.5 rounded text-[10px] font-bold">0</span>
+</div>
+<button class="text-[#617589] hover:text-primary"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<!-- Empty State for Lost Column -->
+<div class="flex flex-col items-center justify-center py-10 text-[#617589] dark:text-[#94a3b8]">
+<span class="material-symbols-outlined !text-4xl mb-2 opacity-20">archive</span>
+<p class="text-xs font-medium italic">No lost leads this period</p>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Staff Login - Buffet Management System</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#dbe0e6] dark:border-[#2d3748] bg-white dark:bg-[#1a222c] px-6 py-4 lg:px-40">
+<div class="flex items-center gap-3 text-[#111418] dark:text-white">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Buffet Management System</h2>
+</div>
+<div class="hidden md:block">
+<span class="text-sm text-[#617589] dark:text-gray-400">v2.4.0 (Stable)</span>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex items-center justify-center px-4 py-12">
+<div class="w-full max-w-[480px] bg-white dark:bg-[#1a222c] shadow-xl rounded-xl overflow-hidden border border-[#dbe0e6] dark:border-[#2d3748]">
+<div class="p-8">
+<!-- Headline Section -->
+<div class="mb-8">
+<h1 class="text-[#111418] dark:text-white tracking-tight text-[32px] font-bold leading-tight text-center pb-2">Staff Login</h1>
+<p class="text-[#617589] dark:text-gray-400 text-base font-normal leading-normal text-center">Enter your credentials to access the system</p>
+</div>
+<!-- Form Section -->
+<form class="space-y-5" onsubmit="return false;">
+<!-- Email Field -->
+<div class="flex flex-col gap-2">
+<label class="text-[#111418] dark:text-white text-sm font-semibold leading-normal">Email</label>
+<input class="form-input flex w-full rounded-lg text-[#111418] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-[#dbe0e6] dark:border-[#2d3748] bg-white dark:bg-[#252f3d] h-14 placeholder:text-[#617589] p-4 text-base font-normal leading-normal transition-all" placeholder="Enter your work email" type="email" value="staff@buffetsys.com"/>
+</div>
+<!-- Password Field -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<label class="text-[#111418] dark:text-white text-sm font-semibold leading-normal">Password</label>
+<a class="text-primary text-sm font-medium hover:underline" href="#">Forgot password?</a>
+</div>
+<div class="relative flex w-full items-stretch rounded-lg group">
+<input class="form-input flex w-full rounded-lg text-[#111418] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border border-[#dbe0e6] dark:border-[#2d3748] bg-white dark:bg-[#252f3d] h-14 placeholder:text-[#617589] p-4 pr-12 text-base font-normal leading-normal transition-all" placeholder="Enter your password" type="password" value="••••••••"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 text-[#617589] cursor-pointer hover:text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</div>
+</div>
+</div>
+<!-- Error State Message -->
+<div class="flex items-center gap-2 px-1 text-[#e53e3e] dark:text-[#fc8181]">
+<span class="material-symbols-outlined text-[18px]">error</span>
+<p class="text-sm font-medium">Invalid email or password</p>
+</div>
+<!-- Login Button -->
+<div class="pt-4">
+<button class="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold text-lg rounded-lg transition-all shadow-md active:scale-[0.98] flex items-center justify-center gap-2">
+<span>Login</span>
+<span class="material-symbols-outlined">login</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Footer Help -->
+<div class="bg-gray-50 dark:bg-[#252f3d] px-8 py-4 border-t border-[#dbe0e6] dark:border-[#2d3748] text-center">
+<p class="text-[#617589] dark:text-gray-400 text-sm">
+                    Don't have an account? <a class="text-primary font-semibold hover:underline" href="#">Contact Administrator</a>
+</p>
+</div>
+</div>
+</main>
+<!-- Page Footer -->
+<footer class="py-8 px-6 text-center">
+<p class="text-[#617589] dark:text-gray-500 text-xs uppercase tracking-widest font-bold">
+            © 2024 Buffet Management Solutions Inc.
+        </p>
+</footer>
+</body></html>

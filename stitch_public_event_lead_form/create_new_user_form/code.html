@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Create New User Form</title>
+<!-- Tailwind CSS with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Manrope -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen">
+<div class="relative flex h-full min-h-screen w-full flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-10 py-3 z-10">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-gray-900 dark:text-white">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fill-rule="evenodd"></path>
+<path clip-rule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">Admin Dashboard</h2>
+</div>
+<label class="flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-gray-500 flex border-none bg-gray-100 dark:bg-gray-800 items-center justify-center pl-4 rounded-l-lg" data-icon="search">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-gray-100 dark:bg-gray-800 focus:ring-0 h-full placeholder:text-gray-500 px-4 rounded-r-lg text-base font-normal leading-normal dark:text-white" placeholder="Search staff..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-6">
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Administrator profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCD0Mrrw3yQxDhMyUIPy4f6jlWP1luvTGjBk-OFNzqeDKznvciEBE1LEU1exbtIHiwJJ_TtYrHmz8Bw9_EQ7WMbwA23Mxz2dcMnOtc_UkhsT209t_uMcx9e04oM-V3IPmz7-C1kVDqpQTHFRtqknD2wDTSn7rMyBm_B2UMQfXkQOU-HqxCpu2ESqAymRzNpfGjbJMrnaZsVC9qR08oQWgv7q1FYDK6dTgbmsXVLZe7DY1tyciXFzfNl20qYajkwLDrSfzdmtoU15dWn");'></div>
+</div>
+</header>
+<div class="flex flex-1">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 p-4">
+<div class="flex flex-col h-full justify-between">
+<div class="flex flex-col gap-6">
+<div class="flex flex-col px-3">
+<h1 class="text-gray-900 dark:text-white text-base font-semibold leading-normal">System Admin</h1>
+<p class="text-gray-500 text-xs font-normal leading-normal">Version 2.4.1</p>
+</div>
+<nav class="flex flex-col gap-1">
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium">Dashboard</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary text-white">
+<span class="material-symbols-outlined">group</span>
+<p class="text-sm font-medium">Staff Management</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+<span class="material-symbols-outlined">inventory_2</span>
+<p class="text-sm font-medium">Inventory</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+<span class="material-symbols-outlined">bar_chart</span>
+<p class="text-sm font-medium">Reports</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium">Settings</p>
+</div>
+</nav>
+</div>
+</div>
+</aside>
+<!-- Main Content with Modal Overlay -->
+<main class="flex-1 relative flex items-center justify-center p-8 bg-gray-50 dark:bg-black/20">
+<!-- Modal Backdrop (Simulated) -->
+<div class="absolute inset-0 bg-gray-900/40 backdrop-blur-sm"></div>
+<!-- Create New User Modal -->
+<div class="relative w-full max-w-[560px] bg-white dark:bg-gray-900 rounded-xl shadow-2xl overflow-hidden flex flex-col">
+<!-- Modal Header -->
+<div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-800 p-6">
+<div>
+<h2 class="text-2xl font-bold text-gray-900 dark:text-white leading-tight">Create New User</h2>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Fill in the details below to add a new staff member.</p>
+</div>
+<button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Body / Form -->
+<div class="p-6 overflow-y-auto max-h-[70vh]">
+<form class="flex flex-col gap-5">
+<!-- Full Name Field -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Full Name</label>
+<input class="form-input w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 h-12 px-4 placeholder:text-gray-400" placeholder="e.g. John Doe" type="text"/>
+</div>
+<!-- Email Address Field -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Email Address</label>
+<input class="form-input w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 h-12 px-4 placeholder:text-gray-400" placeholder="john.doe@company.com" type="email"/>
+</div>
+<!-- Role Selection (Radio Buttons) -->
+<div class="flex flex-col gap-3">
+<label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Assign Role</label>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<label class="relative flex cursor-pointer rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-sm focus:outline-none hover:border-primary transition-colors">
+<input checked="" class="mt-1 h-4 w-4 border-gray-300 text-primary focus:ring-primary" name="role" type="radio" value="admin"/>
+<div class="ml-3 flex flex-col">
+<span class="block text-sm font-bold text-gray-900 dark:text-white leading-none">Administrator</span>
+<span class="mt-1 block text-xs text-gray-500 dark:text-gray-400">Full system access and settings control</span>
+</div>
+</label>
+<label class="relative flex cursor-pointer rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-sm focus:outline-none hover:border-primary transition-colors">
+<input class="mt-1 h-4 w-4 border-gray-300 text-primary focus:ring-primary" name="role" type="radio" value="employee"/>
+<div class="ml-3 flex flex-col">
+<span class="block text-sm font-bold text-gray-900 dark:text-white leading-none">Employee</span>
+<span class="mt-1 block text-xs text-gray-500 dark:text-gray-400">Limited access to daily operation tools</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Temporary Password Field -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Temporary Password</label>
+<div class="relative">
+<input class="form-input w-full rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 h-12 pl-4 pr-12 placeholder:text-gray-400" placeholder="Min. 8 characters" type="password" value="••••••••"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600" type="button">
+<span class="material-symbols-outlined text-xl">visibility</span>
+</button>
+</div>
+<p class="text-[11px] text-gray-500 dark:text-gray-400 leading-normal">The user will be required to change this password upon their first login for security reasons.</p>
+</div>
+</form>
+</div>
+<!-- Modal Footer -->
+<div class="border-t border-gray-100 dark:border-gray-800 p-6 bg-gray-50 dark:bg-gray-800/50 flex items-center justify-end gap-3">
+<button class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-11 px-6 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 text-sm font-bold transition-all hover:bg-gray-50 dark:hover:bg-gray-800">
+                            Cancel
+                        </button>
+<button class="flex min-w-[140px] cursor-pointer items-center justify-center rounded-lg h-11 px-8 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 transition-all hover:bg-primary/90">
+                            Save User
+                        </button>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

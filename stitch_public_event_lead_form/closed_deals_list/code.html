@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Closed Deals List | Buffet Staffing Manager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#dbe0e6] dark:border-slate-800 bg-white dark:bg-background-dark px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-[#111418] dark:text-white">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<h2 class="text-[#111418] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Buffet Staffing Manager</h2>
+</div>
+<label class="flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-[#617589] dark:text-slate-400 flex border-none bg-[#f0f2f4] dark:bg-slate-800 items-center justify-center pl-4 rounded-l-lg" data-icon="Search">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-[#f0f2f4] dark:bg-slate-800 text-[#111418] dark:text-white focus:outline-0 focus:ring-0 h-full placeholder:text-[#617589] rounded-r-lg pl-2 text-base font-normal leading-normal" placeholder="Search deals or clients..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<nav class="flex items-center gap-9">
+<a class="text-[#111418] dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-[#111418] dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Active Events</a>
+<a class="text-primary text-sm font-bold leading-normal border-b-2 border-primary py-1" href="#">Closed Deals</a>
+<a class="text-[#111418] dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Staff Management</a>
+</nav>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-slate-800 text-[#111418] dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-slate-800 text-[#111418] dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-slate-200" data-alt="Administrator user profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCpfY4tChq4HYms6Oj2BdyFpIEQob9p55GbYwnngTff5wt2PNWpjVDxeyM1K6EcxSOIm1KWVh1-HIYMbkxvKcvXL_UYLNNHzzON-6uYT1n46sbGwsCBB7FImNeYtIJB-9ekJJw8zAT7cRAikyHWGj2P_prMj3fJ_LFom1cyzf0n2Vw0qgruQHYwYTwF_E3tjlRQchxulKODiEzrYi-HYHcfgGLidv22xhvfWlq1o-2mgFM4yXyBEqSG06IYvFoKhDGf4pk0W4XOKFKU");'></div>
+</div>
+</header>
+<div class="flex flex-1">
+<!-- Sidebar -->
+<aside class="w-64 border-r border-[#dbe0e6] dark:border-slate-800 bg-white dark:bg-background-dark hidden lg:flex flex-col p-4 shrink-0">
+<div class="flex flex-col gap-6">
+<div class="flex flex-col px-3">
+<h1 class="text-[#111418] dark:text-white text-base font-bold leading-normal">Staffing Co.</h1>
+<p class="text-[#617589] dark:text-slate-400 text-sm font-normal leading-normal">Admin Portal</p>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#617589] dark:text-slate-400 hover:bg-[#f0f2f4] dark:hover:bg-slate-800 cursor-pointer">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium">Dashboard</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#617589] dark:text-slate-400 hover:bg-[#f0f2f4] dark:hover:bg-slate-800 cursor-pointer">
+<span class="material-symbols-outlined">calendar_today</span>
+<p class="text-sm font-medium">Events</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined">archive</span>
+<p class="text-sm font-bold">Closed Deals</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#617589] dark:text-slate-400 hover:bg-[#f0f2f4] dark:hover:bg-slate-800 cursor-pointer">
+<span class="material-symbols-outlined">group</span>
+<p class="text-sm font-medium">Staff Members</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#617589] dark:text-slate-400 hover:bg-[#f0f2f4] dark:hover:bg-slate-800 cursor-pointer">
+<span class="material-symbols-outlined">bar_chart</span>
+<p class="text-sm font-medium">Reports</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-y-auto max-w-full">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 px-8 pt-6">
+<a class="text-[#617589] dark:text-slate-400 text-sm font-medium leading-normal hover:text-primary" href="#">Home</a>
+<span class="text-[#617589] dark:text-slate-400 text-sm font-medium leading-normal">/</span>
+<span class="text-[#111418] dark:text-white text-sm font-medium leading-normal">Closed Deals</span>
+</div>
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between items-end gap-3 px-8 py-6">
+<div class="flex min-w-72 flex-col gap-1">
+<p class="text-[#111418] dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">Closed Deals</p>
+<p class="text-[#617589] dark:text-slate-400 text-base font-normal leading-normal">Review performance data and historical staffing records for completed buffet events.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-white dark:bg-slate-800 border border-[#dbe0e6] dark:border-slate-700 text-[#111418] dark:text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined mr-2 text-xl">filter_list</span>
+<span>Filter</span>
+</button>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors shadow-sm">
+<span class="material-symbols-outlined mr-2 text-xl">download</span>
+<span>Export CSV</span>
+</button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="px-8 pb-10">
+<div class="rounded-xl border border-[#dbe0e6] dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#f8f9fa] dark:bg-slate-800/50 border-b border-[#dbe0e6] dark:border-slate-800">
+<th class="px-6 py-4 text-[#111418] dark:text-slate-200 text-xs font-bold uppercase tracking-wider">Client Name</th>
+<th class="px-6 py-4 text-[#111418] dark:text-slate-200 text-xs font-bold uppercase tracking-wider">Event Date</th>
+<th class="px-6 py-4 text-[#111418] dark:text-slate-200 text-xs font-bold uppercase tracking-wider">Event Type</th>
+<th class="px-6 py-4 text-[#111418] dark:text-slate-200 text-xs font-bold uppercase tracking-wider text-center">Guests</th>
+<th class="px-6 py-4 text-[#111418] dark:text-slate-200 text-xs font-bold uppercase tracking-wider">Assigned Employees</th>
+<th class="px-6 py-4 text-[#111418] dark:text-slate-200 text-xs font-bold uppercase tracking-wider text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#dbe0e6] dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 cursor-pointer transition-colors group">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-[#111418] dark:text-white font-bold text-sm">Grand Plaza Hotel</span>
+<span class="text-[#617589] dark:text-slate-400 text-xs">Contract #29384</span>
+</div>
+</td>
+<td class="px-6 py-5 text-[#617589] dark:text-slate-400 text-sm font-medium">Oct 12, 2023</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs font-bold rounded-full">Wedding</span>
+</td>
+<td class="px-6 py-5 text-[#111418] dark:text-white text-sm font-bold text-center">250</td>
+<td class="px-6 py-5">
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-center bg-cover" data-alt="Employee John D." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCryCFyZKFBlbAo5kkcIE8n9DTW2q2W3ARlqLDhewcf6l3-C7mkbQwz1aUOkS0p7M3--EQMOlZK8c60i5LOIdnRJK0Zm_B4imk2GNRYMhdcgiY8j3SRSa6SAgSTMMnpvbWswQqJTwAofYhEbMl8Nwje8XiFkobUbjCzdG3lohth4A7dQJxSALm0-r3ctZ75yw14Cfj7JSs53aU0GdtP_PeaINqECkoBTujXNkq8WNApJhiYEg77M-5rZDccTsJjW_3CDL3qdpPzMVEP");'></div>
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-center bg-cover" data-alt="Employee Sarah K." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBgi96eCfLx-rvMaUuVDkKDt8y7jkXiUkICgM10htaR2mEWotqGoAJAa7VeE5lxFRPEH-iyNQN4Q9JYeyNcGmPIRK-F8y1Pgsp2xc1kuJkl512-4bSELAqoNWinKnjcOVZKDuZYn73zHEPT5O68bdPnCe2kSKd3uFLfcByJsSIHKCmXPhHDHYFrGVatGFOq6r0k6HVIlxkd3J6VmBZpyTnyQpBOUr7BtYYLLY_QrQCAs0erBdfDe9OqokX7uXdoUvHFirtBizHu9tSn");'></div>
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-[10px] font-bold text-slate-600 dark:text-slate-300">+4</div>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">chevron_right</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 cursor-pointer transition-colors group">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-[#111418] dark:text-white font-bold text-sm">TechCorp HQ</span>
+<span class="text-[#617589] dark:text-slate-400 text-xs">Contract #29401</span>
+</div>
+</td>
+<td class="px-6 py-5 text-[#617589] dark:text-slate-400 text-sm font-medium">Oct 15, 2023</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold rounded-full">Corporate</span>
+</td>
+<td class="px-6 py-5 text-[#111418] dark:text-white text-sm font-bold text-center">120</td>
+<td class="px-6 py-5">
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-center bg-cover" data-alt="Employee Mike R." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB3wqfXxJCKhkSGnk73AspMMotpzGC_eMFWZk2lToe0594PIc9gNU0SmtUliHMNSK6BbTTjdaz3f0lSD0WllL5Rv7dtotvuHK9LL6lr2M-ZnJk5khgq1BL2ylxy6Ju4CR1DSd7EkoI-SQNqVENQY8XUeg5w2aSIMn5X0X4w3iQUmG16I_Gnbc37mLYRZsjaqHn8VegcvxXzlVtNAjuaW6LluBseesdsfFOBfUWKDb-qOG1IwfRhzepS7lk0-BRl9Xt8uLa6bzw_uPUJ");'></div>
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-[10px] font-bold text-slate-600 dark:text-slate-300">+2</div>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">chevron_right</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 cursor-pointer transition-colors group">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-[#111418] dark:text-white font-bold text-sm">Smith Family</span>
+<span class="text-[#617589] dark:text-slate-400 text-xs">Contract #29412</span>
+</div>
+</td>
+<td class="px-6 py-5 text-[#617589] dark:text-slate-400 text-sm font-medium">Oct 18, 2023</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-bold rounded-full">Private</span>
+</td>
+<td class="px-6 py-5 text-[#111418] dark:text-white text-sm font-bold text-center">45</td>
+<td class="px-6 py-5">
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-center bg-cover" data-alt="Employee Anna L." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAw835NfhehqSRhwBROR4i24SQ2dG6gtR_sAz7K1njE4Br_VfsAZISDI-W_sh9UDPNCbhDlatROFCjbsHuvSuPus72x597UwMfk_7EajbJJZVBNAoRJh4lIcENeeEn3o2WUU3aRoCJkL5lIxv7I2lkGVmvPd8f2sc1-NZH-V66lqgY2RUu_8-XQhhx4QcYDE0oxxAzskEY27AMmc-qrnGPtB6Kb5PXA0l_rJx2MwhsUOeDtzyZ7I71BFakAURwB6Axer8_d8mGl0h4p");'></div>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">chevron_right</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 cursor-pointer transition-colors group">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-[#111418] dark:text-white font-bold text-sm">Heritage Museum</span>
+<span class="text-[#617589] dark:text-slate-400 text-xs">Contract #29425</span>
+</div>
+</td>
+<td class="px-6 py-5 text-[#617589] dark:text-slate-400 text-sm font-medium">Oct 20, 2023</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 text-xs font-bold rounded-full">Gala</span>
+</td>
+<td class="px-6 py-5 text-[#111418] dark:text-white text-sm font-bold text-center">500</td>
+<td class="px-6 py-5">
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-center bg-cover" data-alt="Employee Chris P." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZxgHMvAaGCGSKa2hgDYXL7geYYxqemEHKUPFBDtRDKGJ2krUdlBOuFXY1ZsxVGPxmH-rDGOoa8mfgwjjErvojkMx7OdH0ylUUN5gK_GlumRuyyX_Fa9PJ263f76x4jraXvAmJObBdHKDz19K6hfIc3KNfhnN4yXu20jgyIGz6WE0q5IyARtccnq9Nb86ddmLC5UDj7Dt3aP7zws2ANdJXIy60J7fdD404kvwd2X4H-_uyJjenWCkHr02xxA4-zrNC8KWnwp8ADdyf");'></div>
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-center bg-cover" data-alt="Employee Lisa M." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCmKLWTd2_6dapFd5oFGfj27_TTvZqm51RMF_WLIzGCldvCejgIGE1SAlAzdYKC3Kb5eThJ8-xxlkL2ganQK_EbhDz2CBcpzUhZqT3IABnRYjipoLp_swCH06I5yNi6CXzscfh0QOL06s29uLiZ6p4yAm_DAEoswpPzWVx6R7rcJZM2o5-_eIgE6b1dSNIZsGAoZEN3GPvtXVL-mAYfIvaitTLKvgh_3Ve9SXzmNQbAyC7OcycQxJfi4RpSgOTTcHNlSHe40Tk41IM5");'></div>
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-[10px] font-bold text-slate-600 dark:text-slate-300">+8</div>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">chevron_right</span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 cursor-pointer transition-colors group">
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-[#111418] dark:text-white font-bold text-sm">Lakeview Lounge</span>
+<span class="text-[#617589] dark:text-slate-400 text-xs">Contract #29440</span>
+</div>
+</td>
+<td class="px-6 py-5 text-[#617589] dark:text-slate-400 text-sm font-medium">Oct 22, 2023</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 text-xs font-bold rounded-full">Mixer</span>
+</td>
+<td class="px-6 py-5 text-[#111418] dark:text-white text-sm font-bold text-center">80</td>
+<td class="px-6 py-5">
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-center bg-cover" data-alt="Employee James B." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCvGvSSXQSUmDDUDinQLNdeNiJ_x3GxjEijlet40mHny6zepeL9yJsh-BhfBCiWLdhD6IIMGClTQA4I3v-TWBvqSQEzfleibGv4DAJKptBGHahqOyniF9C9nYFRGG66pWLdx6xHWXPPXYSpidB9LF8El7L_c_itA6xvTFKLYFPX3n7u3D3_jB2QJ_oUz6UOSFMYZwArCPLbHVRujgmN1tck06AHVaE4zRM6ovDM93y5MMoenEx0oRNc1jjiCYw2Jh3hO3HAuLpiBr_Q");'></div>
+<div class="size-8 rounded-full border-2 border-white dark:border-slate-900 bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-[10px] font-bold text-slate-600 dark:text-slate-300">+1</div>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">chevron_right</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="flex items-center justify-between px-6 py-4 bg-[#f8f9fa] dark:bg-slate-800/50 border-t border-[#dbe0e6] dark:border-slate-800">
+<div class="text-[#617589] dark:text-slate-400 text-sm">
+                            Showing <span class="font-bold text-[#111418] dark:text-white">1</span> to <span class="font-bold text-[#111418] dark:text-white">5</span> of <span class="font-bold text-[#111418] dark:text-white">124</span> deals
+                        </div>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-8 w-8 bg-white dark:bg-slate-800 border border-[#dbe0e6] dark:border-slate-700 text-[#617589] dark:text-slate-400 hover:bg-slate-50 disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-xl">chevron_left</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-8 w-8 bg-primary text-white text-xs font-bold">1</button>
+<button class="flex items-center justify-center rounded-lg h-8 w-8 bg-white dark:bg-slate-800 border border-[#dbe0e6] dark:border-slate-700 text-[#111418] dark:text-white text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-700">2</button>
+<button class="flex items-center justify-center rounded-lg h-8 w-8 bg-white dark:bg-slate-800 border border-[#dbe0e6] dark:border-slate-700 text-[#111418] dark:text-white text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-700">3</button>
+<button class="flex items-center justify-center rounded-lg h-8 w-8 bg-white dark:bg-slate-800 border border-[#dbe0e6] dark:border-slate-700 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700">
+<span class="material-symbols-outlined text-xl">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

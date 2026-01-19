@@ -1,0 +1,53 @@
+name: Deploy to Windows VPS
+
+on:
+  push:
+    branches:
+      - main  # Altere para a sua branch principal se necessário
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
+      - name: Copy files to VPS via SSH
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          source: "dist/*"
+          target: "C:/inetpub/wwwroot/GestaoBuffet"
+          strip_components: 1
+
+      - name: Restart application via PM2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          script: |
+              # Verifica se o PM2 está rodando e reinicia ou inicia o processo de serve
+              # No Windows, pode ser necessário especificar o path completo do pm2 se não estiver no PATH global do SSH session
+              cd C:/inetpub/wwwroot/GestaoBuffet
+              pm2 restart gestao-buffet || pm2 start "serve -s . -p 80" --name "gestao-buffet"
+              pm2 save
