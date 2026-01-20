@@ -31,21 +31,25 @@ jobs:
         shell: bash
         env:
           SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
-          SSH_HOST: ${{ secrets.VPS_HOST }}
+          SSH_RAW_HOST: ${{ secrets.VPS_HOST }}
           SSH_USER: ${{ secrets.VPS_USERNAME }}
         run: |
-          # 1. Configurar a chave SSH
+          # 1. Limpar o Host de caracteres invisíveis
+          SSH_HOST=$(echo "$SSH_RAW_HOST" | tr -d '\r\n ')
+          echo "Conectando ao host sanitizado..."
+
+          # 2. Configurar a chave SSH
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           
-          # 2. Adicionar o host aos conhecidos para evitar o prompt de confirmação
-          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
+          # 3. Adicionar o host aos conhecidos (usando o IP direto)
+          ssh-keyscan -v -t rsa "$SSH_HOST" >> ~/.ssh/known_hosts
           
-          # 3. Transferir arquivos usando SCP manual (mais logs)
-          echo "Iniciando transferência dos arquivos..."
-          scp -v -i ~/.ssh/id_rsa -r dist/* "$SSH_USER@$SSH_HOST:C:/inetpub/wwwroot/GestaoBuffet"
+          # 4. Transferir arquivos
+          echo "Iniciando transferência..."
+          scp -v -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r dist/* "$SSH_USER@$SSH_HOST:C:/inetpub/wwwroot/GestaoBuffet"
           
-          # 4. Reiniciar via SSH manual
-          echo "Reiniciando aplicação no servidor..."
-          ssh -i ~/.ssh/id_rsa "$SSH_USER@$SSH_HOST" "cd C:\\inetpub\\wwwroot\\GestaoBuffet && pm2 restart gestao-buffet || pm2 start \"serve -s . -p 80\" --name \"gestao-buffet\" && pm2 save"
+          # 5. Reiniciar via SSH
+          echo "Reiniciando aplicação..."
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" "cd C:\\inetpub\\wwwroot\\GestaoBuffet && pm2 restart gestao-buffet || pm2 start \"serve -s . -p 80\" --name \"gestao-buffet\" && pm2 save"
