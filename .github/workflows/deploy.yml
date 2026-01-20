@@ -31,25 +31,22 @@ jobs:
         shell: bash
         env:
           SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
-          SSH_RAW_HOST: ${{ secrets.VPS_HOST }}
           SSH_USER: ${{ secrets.VPS_USERNAME }}
         run: |
-          # 1. Limpar o Host de caracteres invisíveis
-          SSH_HOST=$(echo "$SSH_RAW_HOST" | tr -d '\r\n ')
-          echo "Conectando ao host sanitizado..."
+          # 1. Definimos o IP diretamente para evitar o erro de DNS Masquerading do GitHub
+          SSH_HOST="37.148.132.78"
+          echo "Conectando ao servidor $SSH_HOST..."
 
           # 2. Configurar a chave SSH
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           
-          # 3. Adicionar o host aos conhecidos (usando o IP direto)
-          ssh-keyscan -v -t rsa "$SSH_HOST" >> ~/.ssh/known_hosts
-          
-          # 4. Transferir arquivos
-          echo "Iniciando transferência..."
+          # 3. Transferir arquivos (Pulando StrictHostKeyChecking para evitar travamentos)
+          echo "Iniciando transferência dos arquivos..."
           scp -v -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r dist/* "$SSH_USER@$SSH_HOST:C:/inetpub/wwwroot/GestaoBuffet"
           
-          # 5. Reiniciar via SSH
-          echo "Reiniciando aplicação..."
+          # 4. Reiniciar via SSH
+          echo "Reiniciando aplicação com PM2..."
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" "cd C:\\inetpub\\wwwroot\\GestaoBuffet && pm2 restart gestao-buffet || pm2 start \"serve -s . -p 80\" --name \"gestao-buffet\" && pm2 save"
+          echo "Deploy finalizado com sucesso!"
