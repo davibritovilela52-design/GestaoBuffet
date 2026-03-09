@@ -1,20 +1,74 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Gestão de Buffet - Micro SaaS
 
-# Run and deploy your AI Studio app
+Plataforma completa para gestão de buffets, eventos e leads.
 
-This contains everything you need to run your app locally.
+## 🚀 Funcionalidades
 
-View your app in AI Studio: https://ai.studio/apps/drive/1By8_-TJBuZa4tCzQhIXUzqu7P1W5bJFG
+- **Multi-Tenancy**: Dados isolados por organização/empresa.
+- **Gestão de Leads**: Funil de vendas (Kanban) e CRM.
+- **Gestão de Eventos**: Controle de agenda, tarefas e checklists.
+- **Equipe**: Convite de membros, controle de permissões (Admin/Colaborador).
+- **Financeiro**: Receitas, despesas e relatórios.
+- **Limites de Plano**: Free, Pro e Enterprise (Leads, Membros, Storage).
 
-## Run Locally
+## 🛠️ Stack Tecnológico
 
-**Prerequisites:**  Node.js
+- **Frontend**: React, TypeScript, Vite, Tailwind CSS
+- **Backend**: Supabase (Postgres, Auth, Storage, Edge Functions)
+- **Pagamentos**: Stripe (Mock implementation incluída)
 
+## 📦 Instalação
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+1. Clone o repositório
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+3. Configure as variáveis de ambiente:
+   Crie um arquivo `.env.local` na raiz com suas chaves do Supabase:
+   ```env
+   VITE_SUPABASE_URL=sua_url_supabase
+   VITE_SUPABASE_ANON_KEY=sua_chave_anonima
+   ```
+
+## 🗄️ Setup do Banco de Dados (Supabase)
+
+1. Acesse o [Supabase Dashboard](https://supabase.com/dashboard).
+2. Vá em **SQL Editor**.
+3. Execute o script de migração localizado em `supabase/migrations/001_multi_tenancy.sql`.
+   - Isso criará a tabela `organizations`, adicionará colunas `org_id` e configurará as políticas de segurança (RLS).
+
+## 🏃‍♂️ Executando o Projeto
+
+Para iniciar o servidor de desenvolvimento:
+
+```bash
+npm run dev
+```
+
+Acesse `http://localhost:5173`.
+
+## 🧪 Testes
+
+Para rodar os testes unitários:
+
+```bash
+npm test
+```
+
+## 💳 Sistema de Billing (Planos)
+
+O projeto inclui um sistema de billing "mockado" para desenvolvimento sem conta Stripe ativa:
+
+- **Free**: 15 Leads, 2 Membros, 500MB
+- **Pro**: 500 Leads, 15 Membros, 5GB
+- **Enterprise**: Ilimitado
+
+Para testar o fluxo de upgrade:
+1. Vá em **Configurações** > **Upgrade**.
+2. Escolha um plano.
+3. O sistema simulará o checkout e atualizará seu plano automaticamente.
+
+---
+
+**Desenvolvido como Micro SaaS escalável.**

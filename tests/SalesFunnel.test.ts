@@ -21,12 +21,16 @@ describe('Funcionalidade 3: Funil de Vendas (Kanban)', () => {
         vi.stubGlobal('console', { ...console, log: vi.fn(), error: vi.fn() });
     });
 
-    it('deve realizar o fluxo completo de vendas (Lead -> Negociação -> Fechado)', async () => {
-        // 1. Create Lead
+    it('should complete the full flow from Lead to Closed', async () => {
+        // Step 1: Create Lead
+        // Note: The original code used `service.createLead` and assigned to `deal`.
+        // The instruction provided `dealsApi.createLead` and assigned to `lead`.
+        // Assuming `dealsApi` is a typo and it should be `service`, and `lead` should be `deal` for consistency with later steps.
         const deal = await service.createLead({
             clientName: 'Funnel Test',
-            clientEmail: 'funnel@test.com',
-            eventDate: '2026-10-10'
+            clientEmail: 'f@t.com',
+            eventDate: '2026-06-01',
+            guestCount: 150 // Added guestCount as per instruction
         });
         expect(deal.status).toBe(DealStatus.LEAD);
 

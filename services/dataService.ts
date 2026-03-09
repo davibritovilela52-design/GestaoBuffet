@@ -123,7 +123,7 @@ export class DataService {
   async getUsers(): Promise<User[]> {
     const { data, error } = await supabase
       .from('profiles')
-      .select('id, nome, role, status, email');
+      .select('id, nome, role, status, email, org_id');
 
     if (error) throw error;
 
@@ -133,6 +133,7 @@ export class DataService {
       email: profile.email || '',
       role: profile.role === 'Administrador' ? UserRole.ADMIN : UserRole.EMPLOYEE,
       status: profile.status === 'INACTIVE' ? UserStatus.INACTIVE : UserStatus.ACTIVE,
+      orgId: profile.org_id || undefined,
       avatarUrl: `https://ui-avatars.com/api/?name=${encodeURIComponent(profile.nome || 'Usuario')}&background=random&color=fff`
     }));
   }
@@ -177,7 +178,8 @@ export class DataService {
       p_user_id: data.user.id,
       p_email: newUser.email,
       p_nome: newUser.name,
-      p_role: role
+      p_role: role,
+      p_org_id: requestingUser.orgId || null
     });
 
     if (profileError) throw profileError;
@@ -275,10 +277,17 @@ export class DataService {
       throw new Error('Nome, email e data do evento sao obrigatorios.');
     }
 
-    const guestCount = Number(lead.guestCount);
-    if (!Number.isFinite(guestCount) || guestCount <= 0) {
+    const guestCount = Number(lead.guestCount || 0);
+    if (!Number.isFinite(guestCount) || guestCount < 0) {
       throw new Error('Quantidade de convidados invalida.');
     }
+
+    // Get org_id from current user's profile for tenant isolation
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('org_id')
+      .eq('id', (await supabase.auth.getUser()).data.user?.id || '')
+      .maybeSingle();
 
     const payload = {
       nome_cliente: lead.clientName,
@@ -292,7 +301,8 @@ export class DataService {
       servicos_solicitados: lead.notes || lead.eventName || null,
       local_evento: lead.location || null,
       tipo_espaco: lead.spaceType || null,
-      status: dealStatusToLeadStatus[lead.status || DealStatus.LEAD]
+      status: dealStatusToLeadStatus[lead.status || DealStatus.LEAD],
+      org_id: profile?.org_id || null
     };
 
     const { data, error } = await supabase
@@ -368,13 +378,21 @@ export class DataService {
       throw new Error('Voce ja manifestou interesse.');
     }
 
+    // Get org_id from user's profile
+    const { data: userProfile } = await supabase
+      .from('profiles')
+      .select('org_id')
+      .eq('id', userId)
+      .maybeSingle();
+
     const { data, error } = await supabase
       .from('interesses_funcionarios')
       .insert({
         lead_id: dealId,
         user_id: userId,
         status: 'pendente',
-        role
+        role,
+        org_id: userProfile?.org_id || null
       })
       .select('id')
       .single();
@@ -422,7 +440,8 @@ export class DataService {
         lead_id: dealId,
         user_id: targetUserId,
         status: 'convidado',
-        role
+        role,
+        org_id: requestingUser.orgId || null
       }, { onConflict: 'lead_id,user_id' });
 
     if (error) throw error;
@@ -535,7 +554,8 @@ export class DataService {
         arquivo_nome: payload.file.name,
         arquivo_tipo: payload.file.type,
         arquivo_tamanho: payload.file.size,
-        uploaded_by: requestingUser.id
+        uploaded_by: requestingUser.id,
+        org_id: requestingUser.orgId || null
       })
       .select('*')
       .single();
@@ -629,7 +649,8 @@ export class DataService {
       valor: entry.amount,
       descricao: entry.description,
       categoria: entry.category,
-      data: entry.date
+      data: entry.date,
+      org_id: requestingUser.orgId || null
     };
 
     const { data, error } = await supabase
@@ -763,7 +784,7 @@ export class DataService {
     // 1. Fetch all leads with payment tasks
     const { data: leads, error: leadsError } = await supabase
       .from('leads')
-      .select('id, nome_cliente, tipo_evento, payment_tasks')
+      .select('id, nome_cliente, tipo_evento, payment_tasks, org_id')
       .not('payment_tasks', 'is', null);
 
     if (leadsError) throw leadsError;
@@ -812,7 +833,8 @@ export class DataService {
               task_id: task.id,
               type: alertType,
               amount: task.amount || 0,
-              due_date: task.dueDate
+              due_date: task.dueDate,
+              org_id: lead.org_id || null
             });
           }
         }

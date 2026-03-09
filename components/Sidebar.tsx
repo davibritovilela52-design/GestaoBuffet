@@ -20,7 +20,9 @@ const Sidebar = () => {
             <span className="material-symbols-outlined">restaurant</span>
           </div>
           <div className="flex flex-col">
-            <h1 className="text-[#111418] dark:text-white text-base font-bold leading-none">Buffet Staff</h1>
+            <h1 className="text-[#111418] dark:text-white text-base font-bold leading-none">
+              {user.orgName || 'Buffet Staff'}
+            </h1>
             <p className="text-[#617589] dark:text-gray-400 text-xs font-medium">{isAdmin ? 'Painel Admin' : 'Portal Equipe'}</p>
           </div>
         </div>
@@ -50,6 +52,12 @@ const Sidebar = () => {
               <NavLink to="/financials" className={linkClass}>
                 <span className="material-symbols-outlined text-[24px]">account_balance_wallet</span>
                 <span className="text-sm font-semibold">Financeiro</span>
+              </NavLink>
+
+              <div className="my-2 border-t border-gray-100 dark:border-gray-800"></div>
+              <NavLink to="/settings" className={linkClass}>
+                <span className="material-symbols-outlined text-[24px]">settings</span>
+                <span className="text-sm font-semibold">Configurações</span>
               </NavLink>
             </>
           )}

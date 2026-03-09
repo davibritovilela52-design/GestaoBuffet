@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react';
 // Lazy loading de páginas
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
+const Onboarding = lazy(() => import('./pages/Onboarding'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const UserManagement = lazy(() => import('./pages/UserManagement'));
 const Kanban = lazy(() => import('./pages/Kanban'));
@@ -19,6 +20,10 @@ const DealDetails = lazy(() => import('./pages/DealDetails'));
 const Financials = lazy(() => import('./pages/Financials'));
 const PublicForm = lazy(() => import('./pages/PublicForm'));
 const ClosedDeals = lazy(() => import('./pages/ClosedDeals'));
+const Settings = lazy(() => import('./pages/Settings'));
+const Pricing = lazy(() => import('./pages/Pricing'));
+const BillingCallback = lazy(() => import('./pages/BillingCallback'));
+const Landing = lazy(() => import('./pages/Landing'));
 
 // Loading fallback
 const LoadingFallback = () => (
@@ -28,7 +33,7 @@ const LoadingFallback = () => (
 );
 
 const ProtectedLayout = () => {
-  const { user, isAuthenticated, isLoading, logout } = useAuth();
+  const { user, isAuthenticated, isLoading, logout, needsOnboarding } = useAuth();
   const location = useLocation();
   const [alerts, setAlerts] = useState<any[]>([]);
   const [isAlertsOpen, setIsAlertsOpen] = useState(false);
@@ -69,7 +74,6 @@ const ProtectedLayout = () => {
     try {
       await dataService.acceptAssignment(alert.leadId, user.id);
       setAlerts(prev => prev.filter(a => a.id !== alert.id));
-      // Trigger a refresh if viewing DealDetails
     } catch (error: any) {
       window.alert("Erro ao aceitar convite: " + error.message);
     }
@@ -93,6 +97,11 @@ const ProtectedLayout = () => {
     return <Navigate to="/login" replace />;
   }
 
+  // Redirect to onboarding if user has no org
+  if (needsOnboarding) {
+    return <Navigate to="/onboarding" replace />;
+  }
+
   const getPageTitle = (path: string) => {
     const p = path.split('/')[1];
     if (!p) return 'Painel de Controle';
@@ -101,6 +110,7 @@ const ProtectedLayout = () => {
     if (p === 'events') return 'Eventos & Negócios';
     if (p === 'deals') return 'Histórico';
     if (p === 'financials') return 'Financeiro';
+    if (p === 'settings') return 'Configurações';
     return 'Buffet Manager';
   };
 
@@ -109,7 +119,14 @@ const ProtectedLayout = () => {
       <Sidebar />
       <main className="flex-1 flex flex-col overflow-y-auto">
         <header className="sticky top-0 z-10 flex items-center justify-between bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-solid border-[#dbe0e6] dark:border-gray-800 px-8 py-4">
-          <h2 className="text-[#111418] dark:text-white text-xl font-bold tracking-tight capitalize">{getPageTitle(location.pathname)}</h2>
+          <div className="flex items-center gap-3">
+            <h2 className="text-[#111418] dark:text-white text-xl font-bold tracking-tight capitalize">{getPageTitle(location.pathname)}</h2>
+            {user.orgName && (
+              <span className="text-xs bg-primary/10 text-primary px-2.5 py-1 rounded-full font-semibold">
+                {user.orgName}
+              </span>
+            )}
+          </div>
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsAlertsOpen(!isAlertsOpen)}
@@ -124,6 +141,14 @@ const ProtectedLayout = () => {
             </button>
             <span className="text-sm font-medium">{user.name}</span>
             <span className="text-xs bg-gray-200 dark:bg-gray-700 px-2 py-0.5 rounded text-gray-600 dark:text-gray-300 font-bold">{user.role}</span>
+            {user.orgPlan && (
+              <span className={`text-xs px-2 py-0.5 rounded font-bold uppercase ${user.orgPlan === 'enterprise' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' :
+                user.orgPlan === 'pro' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' :
+                  'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+                }`}>
+                {user.orgPlan}
+              </span>
+            )}
             <button onClick={logout} className="text-sm text-red-500 hover:underline">Sair</button>
             <div className="h-10 w-10 rounded-full bg-cover bg-center border-2 border-primary/20" style={{ backgroundImage: `url(${user.avatarUrl})` }}></div>
           </div>
@@ -155,19 +180,23 @@ export default function App() {
       <HashRouter>
         <Suspense fallback={<LoadingFallback />}>
           <Routes>
+            <Route path="/" element={<Landing />} />
             <Route path="/public-request" element={<PublicForm />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/onboarding" element={<Onboarding />} />
 
             {/* Protected Routes */}
             <Route element={<ProtectedLayout />}>
-              <Route path="/" element={<Navigate to="/dashboard" />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/staffing" element={<UserManagement />} />
               <Route path="/events" element={<Kanban />} />
               <Route path="/events/:id" element={<DealDetails />} />
               <Route path="/deals/closed" element={<ClosedDeals />} />
               <Route path="/financials" element={<Financials />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/billing/callback" element={<BillingCallback />} />
             </Route>
           </Routes>
         </Suspense>

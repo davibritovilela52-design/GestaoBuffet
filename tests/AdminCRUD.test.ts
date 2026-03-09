@@ -97,6 +97,6 @@ describe('Admin CRUD Enforcement', () => {
             category: 'Test',
             description: 'Fail',
             date: '2026-01-01'
-        }, adminUser)).rejects.toThrow(/Lançamentos financeiros só podem ser adicionados a negócios FECHADOS/);
+        }, adminUser)).rejects.toThrow(/Lançamentos financeiros vinculados a negócios só podem ser feitos se o negócio estiver FECHADO/);
     });
 });

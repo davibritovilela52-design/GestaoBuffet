@@ -1,15 +1,17 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { User, UserRole, UserStatus } from '../types';
+import { User, UserRole, UserStatus, PlanTier } from '../types';
 import { supabase } from '../services/supabaseClient';
 
 interface AuthContextType {
     user: User | null;
     isLoading: boolean;
     login: (email: string, password: string) => Promise<void>;
-    register: (name: string, email: string, password: string, role: 'Administrador' | 'Funcionario') => Promise<void>;
+    register: (name: string, email: string, password: string) => Promise<void>;
     logout: () => void;
     isAuthenticated: boolean;
     isAdmin: boolean;
+    needsOnboarding: boolean;
+    refreshUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -18,21 +20,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    const mapProfileToUser = (profile: { id: string; nome: string; role: string; status?: string; email?: string }, email?: string | null): User => {
+    const mapProfileToUser = (
+        profile: { id: string; nome: string; role: string; status?: string; email?: string; org_id?: string },
+        email?: string | null,
+        org?: { name: string; plan: string } | null
+    ): User => {
         const role = profile.role === 'Administrador' ? UserRole.ADMIN : UserRole.EMPLOYEE;
         return {
             id: profile.id,
             name: profile.nome,
             email: profile.email || email || '',
             role,
-            status: profile.status === 'INACTIVE' ? UserStatus.INACTIVE : UserStatus.ACTIVE
+            status: profile.status === 'INACTIVE' ? UserStatus.INACTIVE : UserStatus.ACTIVE,
+            orgId: profile.org_id || undefined,
+            orgName: org?.name || undefined,
+            orgPlan: (org?.plan as PlanTier) || undefined,
         };
     };
 
     const ensureProfile = useCallback(async (authUser: { id: string; email?: string | null; user_metadata?: { nome?: string; role?: string } }) => {
         const { data, error } = await supabase
             .from('profiles')
-            .select('id, nome, role, status, email')
+            .select('id, nome, role, status, email, org_id')
             .eq('id', authUser.id)
             .maybeSingle();
 
@@ -50,11 +59,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 status: 'ACTIVE',
                 email: authUser.email || ''
             })
-            .select('id, nome, role, status, email')
+            .select('id, nome, role, status, email, org_id')
             .single();
 
         if (insertError) throw insertError;
         return inserted;
+    }, []);
+
+    const loadOrganization = useCallback(async (orgId: string | null | undefined) => {
+        if (!orgId) return null;
+        const { data, error } = await supabase
+            .from('organizations')
+            .select('name, plan')
+            .eq('id', orgId)
+            .maybeSingle();
+        if (error) {
+            console.error('Error loading organization:', error);
+            return null;
+        }
+        return data;
     }, []);
 
     const loadUserFromSession = useCallback(async () => {
@@ -71,8 +94,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             email: authUser.email,
             user_metadata: authUser.user_metadata as { nome?: string; role?: string }
         });
-        setUser(mapProfileToUser(profile, authUser.email));
-    }, [ensureProfile]);
+
+        const org = await loadOrganization(profile.org_id);
+        setUser(mapProfileToUser(profile, authUser.email, org));
+    }, [ensureProfile, loadOrganization]);
 
     useEffect(() => {
         const validateSession = async () => {
@@ -106,14 +131,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         await loadUserFromSession();
     }, [loadUserFromSession]);
 
-    const register = useCallback(async (name: string, email: string, password: string, role: 'Administrador' | 'Funcionario') => {
+    const register = useCallback(async (name: string, email: string, password: string) => {
         const { data, error } = await supabase.auth.signUp({
             email,
             password,
             options: {
                 data: {
                     nome: name,
-                    role: role
+                    role: 'Administrador' // New signups are always org admins
                 }
             }
         });
@@ -125,6 +150,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         supabase.auth.signOut().finally(() => setUser(null));
     }, []);
 
+    const refreshUser = useCallback(async () => {
+        await loadUserFromSession();
+    }, [loadUserFromSession]);
+
     return (
         <AuthContext.Provider
             value={{
@@ -134,7 +163,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 register,
                 logout,
                 isAuthenticated: !!user,
-                isAdmin: user?.role === UserRole.ADMIN
+                isAdmin: user?.role === UserRole.ADMIN,
+                needsOnboarding: !!user && !user.orgId,
+                refreshUser,
             }}
         >
             {children}

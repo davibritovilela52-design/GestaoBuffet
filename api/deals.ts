@@ -32,21 +32,15 @@ export const dealsApi = {
         await delay(1000);
 
         const newDeal: Deal = {
-            id: Math.random().toString(36).substr(2, 9),
-            clientName: lead.clientName,
-            clientEmail: lead.clientEmail,
-            eventName: lead.eventName || 'Novo Evento',
-            eventDate: lead.eventDate,
-            eventType: lead.eventType as any,
-            guestCount: lead.guestCount || 0,
-            value: 0, // Always start at 0. Derived from Financials.
-            requirements: [],
-            assignments: [],
-            createdAt: new Date().toISOString(),
+            guestCount: 0,
             ...lead,
+            id: Math.random().toString(36).substr(2, 9),
+            requirements: lead.requirements || [],
+            assignments: lead.assignments || [],
+            createdAt: new Date().toISOString(),
             status: DealStatus.LEAD,
             value: 0, // Override any passed value
-        };
+        } as Deal;
 
         db.deals.push(newDeal);
         db.save();
