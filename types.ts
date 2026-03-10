@@ -53,11 +53,11 @@ export enum DealStatus {
 }
 
 export enum EventType {
-  WEDDING = 'Wedding',
-  CORPORATE = 'Corporate',
-  PRIVATE_PARTY = 'Private Party',
-  GALA = 'Gala',
-  OTHER = 'Other'
+  WEDDING = 'Casamento',
+  CORPORATE = 'Evento Corporativo',
+  PRIVATE_PARTY = 'Festa Privada',
+  GALA = 'Baile de Gala',
+  OTHER = 'Outro'
 }
 
 export interface StaffRequirement {

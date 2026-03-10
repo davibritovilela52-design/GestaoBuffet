@@ -155,11 +155,9 @@ export default function PublicForm() {
                                         <label className="block text-sm font-bold text-gray-700 mb-1">Tipo de Evento <span className="text-red-500">*</span></label>
                                         <select required name="type" value={formData.type} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
                                             <option value="">Selecione...</option>
-                                            <option value="Wedding">Casamento</option>
-                                            <option value="Corporate">Evento Corporativo</option>
-                                            <option value="Private Party">Festa Privada</option>
-                                            <option value="Gala">Baile de Gala</option>
-                                            <option value="Other">Outro</option>
+                                            {Object.values(EventType).map(type => (
+                                                <option key={type} value={type}>{type}</option>
+                                            ))}
                                         </select>
                                     </div>
                                     <div>

@@ -63,15 +63,101 @@ export default function Landing() {
 
                     {/* Mockup Preview */}
                     <div className="mt-20 relative mx-auto max-w-5xl">
-                        <div className="bg-slate-900 rounded-2xl p-2 shadow-2xl ring-1 ring-slate-900/10 backdrop-blur-sm">
-                            <div className="bg-slate-800 rounded-xl overflow-hidden aspect-video border border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-500">
-                                {/* Placeholder for App Screenshot */}
-                                <div className="text-center">
-                                    <span className="material-symbols-outlined text-6xl mb-4 opacity-50">dashboard</span>
-                                    <p className="font-medium">Dashboard Preview</p>
+                        <div className="bg-slate-900 rounded-2xl p-2 shadow-2xl ring-1 ring-white/10">
+                            <div className="bg-[#111827] rounded-xl overflow-hidden border border-slate-700/50">
+                                {/* Mock Top Bar */}
+                                <div className="flex items-center justify-between px-5 py-3 border-b border-slate-700/50 bg-[#0f172a]">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                                        <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                        <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-slate-500 text-[10px]">
+                                        <span className="material-symbols-outlined text-xs">restaurant</span>
+                                        <span className="font-semibold">GestãoBuffet — Painel de Controle</span>
+                                    </div>
+                                    <div className="w-16"></div>
+                                </div>
+
+                                <div className="flex">
+                                    {/* Mock Sidebar */}
+                                    <div className="w-14 bg-[#0f172a] border-r border-slate-700/50 py-4 flex flex-col items-center gap-4 shrink-0">
+                                        <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                                            <span className="material-symbols-outlined text-primary text-sm">dashboard</span>
+                                        </div>
+                                        <div className="w-8 h-8 rounded-lg hover:bg-slate-800 flex items-center justify-center opacity-40">
+                                            <span className="material-symbols-outlined text-slate-400 text-sm">view_kanban</span>
+                                        </div>
+                                        <div className="w-8 h-8 rounded-lg hover:bg-slate-800 flex items-center justify-center opacity-40">
+                                            <span className="material-symbols-outlined text-slate-400 text-sm">group</span>
+                                        </div>
+                                        <div className="w-8 h-8 rounded-lg hover:bg-slate-800 flex items-center justify-center opacity-40">
+                                            <span className="material-symbols-outlined text-slate-400 text-sm">payments</span>
+                                        </div>
+                                        <div className="w-8 h-8 rounded-lg hover:bg-slate-800 flex items-center justify-center opacity-40">
+                                            <span className="material-symbols-outlined text-slate-400 text-sm">settings</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Mock Main Content */}
+                                    <div className="flex-1 p-5 space-y-5 min-h-[340px] sm:min-h-[380px]">
+                                        {/* Header */}
+                                        <div>
+                                            <h3 className="text-white text-sm font-bold">Dashboard Gerencial</h3>
+                                            <p className="text-slate-500 text-[10px]">Visão geral do desempenho</p>
+                                        </div>
+
+                                        {/* Mock Stat Cards Row */}
+                                        <div>
+                                            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-2">Performance Comercial</p>
+                                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                                <MockStatCard label="Total de Leads" value="47" icon="groups" color="bg-blue-500" />
+                                                <MockStatCard label="Em Negociação" value="12" icon="handshake" color="bg-amber-500" />
+                                                <MockStatCard label="Fechados" value="28" icon="check_circle" color="bg-green-500" />
+                                                <MockStatCard label="Perdidos" value="7" icon="cancel" color="bg-red-500" />
+                                            </div>
+                                        </div>
+
+                                        {/* Mock Financial Cards */}
+                                        <div>
+                                            <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-2">Indicadores Financeiros</p>
+                                            <div className="grid grid-cols-3 gap-2">
+                                                <MockStatCard label="Receita Total" value="R$ 84.500" icon="payments" color="bg-emerald-600" />
+                                                <MockStatCard label="Despesas" value="R$ 31.200" icon="shopping_cart_checkout" color="bg-rose-500" />
+                                                <MockStatCard label="Resultado" value="R$ 53.300" icon="account_balance_wallet" color="bg-primary" highlight />
+                                            </div>
+                                        </div>
+
+                                        {/* Mock Upcoming Events Table */}
+                                        <div>
+                                            <div className="flex items-center justify-between mb-2">
+                                                <p className="text-[10px] font-bold text-white">Próximos Eventos Confirmados</p>
+                                                <span className="text-[9px] text-primary font-semibold">Ver Agenda →</span>
+                                            </div>
+                                            <div className="bg-[#0f172a] rounded-lg border border-slate-700/50 overflow-hidden">
+                                                <table className="w-full text-[10px]">
+                                                    <thead>
+                                                        <tr className="bg-slate-800/50">
+                                                            <th className="text-left px-3 py-1.5 text-slate-500 font-bold text-[9px] uppercase">Cliente</th>
+                                                            <th className="text-left px-3 py-1.5 text-slate-500 font-bold text-[9px] uppercase hidden sm:table-cell">Data</th>
+                                                            <th className="text-left px-3 py-1.5 text-slate-500 font-bold text-[9px] uppercase">Tipo</th>
+                                                            <th className="text-center px-3 py-1.5 text-slate-500 font-bold text-[9px] uppercase hidden sm:table-cell">Convidados</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className="divide-y divide-slate-800">
+                                                        <MockTableRow name="Maria Silva" date="15 Mar" type="Casamento" guests="180" />
+                                                        <MockTableRow name="João Oliveira" date="22 Mar" type="Aniversário" guests="60" />
+                                                        <MockTableRow name="Ana Costa" date="05 Abr" type="Corporativo" guests="120" />
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        {/* Glow effect behind the mockup */}
+                        <div className="absolute -inset-4 -z-10 bg-gradient-to-r from-primary/20 via-blue-500/10 to-purple-500/20 blur-3xl rounded-3xl opacity-60"></div>
                     </div>
                 </div>
             </section>
@@ -220,5 +306,44 @@ function PricingCard({ name, price, period, features, cta, highlight }: any) {
                 {cta}
             </Link>
         </div>
+    );
+}
+
+function MockStatCard({ label, value, icon, color, highlight = false }: any) {
+    return (
+        <div className={`${highlight ? 'bg-primary/10 border-primary/30' : 'bg-[#1e293b]'} rounded-lg p-2.5 border border-slate-700/50 flex items-center justify-between gap-2`}>
+            <div className="flex flex-col gap-0.5 min-w-0">
+                <span className="text-slate-400 text-[8px] font-bold uppercase tracking-wider truncate">{label}</span>
+                <span className={`${highlight ? 'text-primary' : 'text-white'} text-sm font-black tracking-tight`}>{value}</span>
+            </div>
+            <div className={`w-7 h-7 rounded-full ${color} flex items-center justify-center text-white shrink-0 shadow-lg`}>
+                <span className="material-symbols-outlined text-[14px]">{icon}</span>
+            </div>
+        </div>
+    );
+}
+
+function MockTableRow({ name, date, type, guests }: any) {
+    return (
+        <tr className="hover:bg-slate-800/30 transition-colors">
+            <td className="px-3 py-2">
+                <div className="flex items-center gap-1.5">
+                    <div className="w-5 h-5 rounded bg-primary/10 flex items-center justify-center">
+                        <span className="material-symbols-outlined text-primary text-[10px]">person</span>
+                    </div>
+                    <span className="text-white font-semibold text-[10px]">{name}</span>
+                </div>
+            </td>
+            <td className="px-3 py-2 text-slate-400 hidden sm:table-cell">{date}</td>
+            <td className="px-3 py-2">
+                <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-blue-900/40 text-blue-300 uppercase">{type}</span>
+            </td>
+            <td className="px-3 py-2 text-center text-slate-300 hidden sm:table-cell">
+                <div className="flex items-center justify-center gap-1">
+                    <span className="material-symbols-outlined text-[10px] opacity-50">groups</span>
+                    {guests}
+                </div>
+            </td>
+        </tr>
     );
 }

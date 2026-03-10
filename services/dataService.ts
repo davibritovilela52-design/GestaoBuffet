@@ -61,7 +61,7 @@ const mapLeadToDeal = (lead: any, interests: any[], financials: any[]): Deal => 
     eventDate: lead.data_evento,
     startTime: lead.horario_inicio,
     endTime: lead.horario_fim,
-    eventType: lead.tipo_evento || 'Other',
+    eventType: lead.tipo_evento || 'Outro',
     guestCount: toPositiveInt(lead.qtd_convidados),
     status: leadStatusToDealStatus[lead.status] || DealStatus.LEAD,
     value: totalIncome - totalExpense,
