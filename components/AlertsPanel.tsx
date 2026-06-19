@@ -1,5 +1,6 @@
 import React from 'react';
 import { PaymentAlert, AlertType } from '../types';
+import { formatDateOnly } from '../utils/date';
 
 interface AlertsPanelProps {
     alerts: any[];
@@ -62,7 +63,7 @@ export const AlertsPanel: React.FC<AlertsPanelProps> = ({ alerts, onResolve, onA
                                 {alert.type !== 'STAFF_INVITATION' && (
                                     <p className="font-black text-sm">R$ {alert.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
                                 )}
-                                <p className="text-[10px] opacity-70">{alert.type === 'STAFF_INVITATION' ? 'Data:' : 'Vencimento:'} {new Date(alert.dueDate).toLocaleDateString()}</p>
+                                <p className="text-[10px] opacity-70">{alert.type === 'STAFF_INVITATION' ? 'Data:' : 'Vencimento:'} {formatDateOnly(alert.dueDate)}</p>
                             </div>
                         </div>
 

@@ -1,10 +1,13 @@
 import { supabase } from './supabaseClient';
-import { Deal, DealDocument, DealStatus, FinancialEntry, KPI, PaymentAlert, AlertType, PaymentTask, TransactionType, User, UserRole, UserStatus } from '../types';
+import { Deal, DealDocument, DealStatus, EventType, FinancialEntry, KPI, PaymentAlert, AlertType, PaymentTask, TransactionType, User, UserRole, UserStatus } from '../types';
+import { getPaymentAlertType } from '../utils/paymentAlerts';
 
 const leadStatusToDealStatus: Record<string, DealStatus> = {
   'Lead': DealStatus.LEAD,
   'Em negociacao': DealStatus.NEGOTIATION,
   'Fechado': DealStatus.CLOSED,
+  'Realizado': DealStatus.REALIZED,
+  'Realizados': DealStatus.REALIZED,
   'Perdido': DealStatus.LOST
 };
 
@@ -12,6 +15,7 @@ const dealStatusToLeadStatus: Record<DealStatus, string> = {
   [DealStatus.LEAD]: 'Lead',
   [DealStatus.NEGOTIATION]: 'Em negociacao',
   [DealStatus.CLOSED]: 'Fechado',
+  [DealStatus.REALIZED]: 'Realizado',
   [DealStatus.LOST]: 'Perdido'
 };
 
@@ -43,6 +47,21 @@ const transactionTypeToFinanceType: Record<TransactionType, string> = {
 
 const DOCUMENTS_BUCKET = 'deal-documents';
 
+const normalizeEventType = (type: string | undefined | null): EventType | string => {
+  if (!type) return EventType.OTHER;
+  
+  const values = Object.values(EventType) as string[];
+  if (values.includes(type)) return type;
+  
+  const upperType = type.toUpperCase();
+  if (upperType.includes('WEDDING')) return EventType.WEDDING;
+  if (upperType.includes('CORPORATE')) return EventType.CORPORATE;
+  if (upperType.includes('PRIVATE')) return EventType.PRIVATE_PARTY;
+  if (upperType.includes('GALA')) return EventType.GALA;
+  
+  return EventType.OTHER;
+};
+
 const mapLeadToDeal = (lead: any, interests: any[], financials: any[]): Deal => {
   const dealFinancials = financials.filter(entry => entry.lead_id === lead.id);
   const totalIncome = dealFinancials
@@ -52,16 +71,18 @@ const mapLeadToDeal = (lead: any, interests: any[], financials: any[]): Deal => 
     .filter(entry => entry.tipo === 'despesa')
     .reduce((sum, entry) => sum + Number(entry.valor || 0), 0);
 
+  const normalizedEventType = normalizeEventType(lead.tipo_evento);
+
   return {
     id: lead.id,
     clientName: lead.nome_cliente,
     clientEmail: lead.email,
     clientPhone: lead.telefone,
-    eventName: lead.tipo_evento ? `${lead.tipo_evento} - ${lead.nome_cliente}` : `Evento de ${lead.nome_cliente}`,
+    eventName: lead.tipo_evento ? `${normalizedEventType} - ${lead.nome_cliente}` : `Evento de ${lead.nome_cliente}`,
     eventDate: lead.data_evento,
     startTime: lead.horario_inicio,
     endTime: lead.horario_fim,
-    eventType: lead.tipo_evento || 'Outro',
+    eventType: normalizedEventType as EventType,
     guestCount: toPositiveInt(lead.qtd_convidados),
     status: leadStatusToDealStatus[lead.status] || DealStatus.LEAD,
     value: totalIncome - totalExpense,
@@ -735,7 +756,7 @@ export class DataService {
         leadId: row.lead_id,
         taskId: row.task_id,
         clientName: row.leads?.nome_cliente || 'Desconhecido',
-        eventName: row.leads?.tipo_evento || 'Evento',
+        eventName: row.leads?.tipo_evento ? normalizeEventType(row.leads.tipo_evento) as string : 'Evento',
         amount: Number(row.amount || 0),
         dueDate: row.due_date,
         type: row.type as AlertType,
@@ -756,7 +777,7 @@ export class DataService {
         id: row.id,
         leadId: row.lead_id,
         clientName: row.leads?.nome_cliente || 'Buffet',
-        eventName: row.leads?.tipo_evento || 'Evento',
+        eventName: row.leads?.tipo_evento ? normalizeEventType(row.leads.tipo_evento) as string : 'Evento',
         amount: 0,
         dueDate: row.leads?.data_evento || '',
         type: AlertType.STAFF_INVITATION,
@@ -807,17 +828,7 @@ export class DataService {
       for (const task of tasks) {
         if (task.isCompleted) continue;
 
-        const dueDate = new Date(task.dueDate);
-        dueDate.setHours(0, 0, 0, 0);
-
-        const diffTime = dueDate.getTime() - today.getTime();
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-        let alertType: string | null = null;
-        if (diffDays === 7) alertType = 'UPCOMING_7';
-        else if (diffDays === 3) alertType = 'UPCOMING_3';
-        else if (diffDays === 0) alertType = 'DUE_TODAY';
-        else if (diffDays === -1) alertType = 'OVERDUE';
+        const alertType = getPaymentAlertType(task.dueDate, today);
 
         if (alertType) {
           // Check if this specific alert already exists

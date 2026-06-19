@@ -21,7 +21,7 @@ describe('Funcionalidade 3: Funil de Vendas (Kanban)', () => {
         vi.stubGlobal('console', { ...console, log: vi.fn(), error: vi.fn() });
     });
 
-    it('should complete the full flow from Lead to Closed', async () => {
+    it('should complete the full flow from Lead to Realized', async () => {
         // Step 1: Create Lead
         // Note: The original code used `service.createLead` and assigned to `deal`.
         // The instruction provided `dealsApi.createLead` and assigned to `lead`.
@@ -46,9 +46,14 @@ describe('Funcionalidade 3: Funil de Vendas (Kanban)', () => {
         updatedDeal = await service.getDealById(deal.id);
         expect(updatedDeal?.status).toBe(DealStatus.CLOSED);
 
-        // 4. Verify list persistence
+        // 4. Move to Realized
+        await service.updateDealStatus(deal.id, DealStatus.REALIZED, adminUser);
+        updatedDeal = await service.getDealById(deal.id);
+        expect(updatedDeal?.status).toBe(DealStatus.REALIZED);
+
+        // 5. Verify list persistence
         const allDeals = await service.getDeals();
         const storedDeal = allDeals.find(d => d.id === deal.id);
-        expect(storedDeal?.status).toBe(DealStatus.CLOSED);
+        expect(storedDeal?.status).toBe(DealStatus.REALIZED);
     });
 });

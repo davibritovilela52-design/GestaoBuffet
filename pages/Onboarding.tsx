@@ -59,7 +59,7 @@ export default function Onboarding() {
                     <div className="flex-1 h-0.5 bg-primary"></div>
                     <div className="flex items-center gap-2">
                         <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm font-bold">2</div>
-                        <span className="text-sm font-bold text-gray-900 dark:text-white">Sua empresa</span>
+                        <span className="text-sm font-bold text-gray-900 dark:text-white">Seu buffet</span>
                     </div>
                     <div className="flex-1 h-0.5 bg-gray-200 dark:bg-gray-700"></div>
                     <div className="flex items-center gap-2">
@@ -71,9 +71,9 @@ export default function Onboarding() {
                 <div className="bg-white dark:bg-[#1e293b] shadow-2xl rounded-2xl p-8 border border-gray-100 dark:border-gray-800">
                     <div className="text-center mb-8">
                         <div className="inline-flex p-4 bg-gradient-to-br from-primary/20 to-blue-500/10 rounded-2xl mb-4">
-                            <span className="material-symbols-outlined text-primary text-4xl">business</span>
+                            <span className="material-symbols-outlined text-primary text-4xl">restaurant</span>
                         </div>
-                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Configure sua empresa</h1>
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Configure seu buffet</h1>
                         <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
                             Crie o espaço de trabalho para o seu buffet
                         </p>
@@ -82,7 +82,7 @@ export default function Onboarding() {
                     <form onSubmit={handleSubmit} className="space-y-5">
                         <div>
                             <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1.5">
-                                Nome da empresa
+                                Nome do buffet
                             </label>
                             <input
                                 type="text"
@@ -134,7 +134,7 @@ export default function Onboarding() {
                             ) : (
                                 <>
                                     <span className="material-symbols-outlined text-lg">rocket_launch</span>
-                                    Criar minha empresa
+                                    Criar meu espaço
                                 </>
                             )}
                         </button>
@@ -144,9 +144,9 @@ export default function Onboarding() {
                         <div className="flex items-start gap-3">
                             <span className="material-symbols-outlined text-primary text-lg mt-0.5">info</span>
                             <div>
-                                <p className="text-xs font-semibold text-gray-700 dark:text-gray-300">Plano Gratuito</p>
+                                <p className="text-xs font-semibold text-gray-700 dark:text-gray-300">Ambiente pessoal</p>
                                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                                    Você começa com até 50 leads e 3 membros. Faça upgrade a qualquer momento.
+                                    Organize leads, eventos, equipe e financeiro em um espaço único para sua operação.
                                 </p>
                             </div>
                         </div>

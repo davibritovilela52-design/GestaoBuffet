@@ -23,7 +23,7 @@ export default function Landing() {
                             </Link>
                             {!user && (
                                 <Link to="/register" className="bg-primary hover:bg-primary/90 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all active:scale-95 shadow-lg shadow-primary/25 hover:shadow-primary/40">
-                                    Começar Grátis
+                                    Criar Conta
                                 </Link>
                             )}
                         </div>
@@ -41,20 +41,20 @@ export default function Landing() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider mb-8 border border-blue-100 dark:border-blue-800">
                         <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                        Novo: Planos Enterprise Disponíveis
+                        Ambiente pessoal para gestão do buffet
                     </div>
                     <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-slate-900 dark:text-white mb-6 leading-tight">
                         A plataforma completa para <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">gerenciar seu Buffet</span>
                     </h1>
                     <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-                        Deixe as planilhas para trás. Controle leads, eventos, equipe e financeiro em um único lugar. Simples, rápido e escalável.
+                        Deixe as planilhas para trás. Controle leads, eventos, equipe e financeiro em um único lugar. Simples, rápido e direto para sua rotina.
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Link to={user ? "/dashboard" : "/register"} className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white text-base font-bold px-8 py-4 rounded-xl transition-all active:scale-95 shadow-xl shadow-primary/30 hover:shadow-primary/50 flex items-center justify-center gap-2">
                             <span className="material-symbols-outlined">rocket_launch</span>
-                            {user ? 'Ir para Dashboard' : 'Criar Conta Grátis'}
+                            {user ? 'Ir para Dashboard' : 'Criar Conta'}
                         </Link>
                         <a href="#features" className="w-full sm:w-auto bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-base font-bold px-8 py-4 rounded-xl transition-all active:scale-95 text-center">
                             Conhecer Recursos
@@ -191,7 +191,7 @@ export default function Landing() {
                         <FeatureCard
                             icon="security"
                             title="Segurança Total"
-                            desc="Seus dados isolados e protegidos (Multi-tenancy). Backups automáticos e acesso controlado."
+                            desc="Acesso controlado para manter os dados do seu buffet organizados e protegidos."
                         />
                         <FeatureCard
                             icon="verified"
@@ -202,45 +202,6 @@ export default function Landing() {
                             icon="calendar_month"
                             title="Agenda Inteligente"
                             desc="Visualize seus eventos futuros e disponibilidade para evitar conflitos de data."
-                        />
-                    </div>
-                </div>
-            </section>
-
-            {/* Pricing Section */}
-            <section id="pricing" className="py-24 bg-slate-50 dark:bg-[#1e293b]/50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-4">Planos Flexíveis</h2>
-                        <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                            Comece grátis e faça upgrade conforme seu buffet cresce.
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                        <PricingCard
-                            name="Free"
-                            price="R$ 0"
-                            period="/mês"
-                            features={['15 Leads', '2 Membros', '500MB Storage', 'Gestão Básica']}
-                            cta="Criar Conta"
-                            highlight={false}
-                        />
-                        <PricingCard
-                            name="Pro"
-                            price="R$ 97"
-                            period="/mês"
-                            features={['500 Leads', '15 Membros', '5GB Storage', 'Relatórios Avançados', 'Suporte Prioritário']}
-                            cta="Começar Pro"
-                            highlight={true}
-                        />
-                        <PricingCard
-                            name="Enterprise"
-                            price="Consulta"
-                            period=""
-                            features={['Leads Ilimitados', 'Membros Ilimitados', '50GB Storage', 'API & Integrações', 'Gerente de Conta']}
-                            cta="Fale Conosco"
-                            highlight={false}
                         />
                     </div>
                 </div>
@@ -277,34 +238,6 @@ function FeatureCard({ icon, title, desc }: any) {
             </div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{title}</h3>
             <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{desc}</p>
-        </div>
-    );
-}
-
-function PricingCard({ name, price, period, features, cta, highlight }: any) {
-    return (
-        <div className={`relative p-8 rounded-3xl border transition-all ${highlight ? 'bg-white dark:bg-[#1e293b] border-primary ring-2 ring-primary shadow-2xl scale-105 z-10' : 'bg-white dark:bg-[#1e293b] border-slate-200 dark:border-slate-800 shadow-lg hover:border-blue-300'}`}>
-            {highlight && (
-                <div className="absolute top-0 right-0 left-0 -mt-3 flex justify-center">
-                    <span className="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide shadow-sm">Mais Popular</span>
-                </div>
-            )}
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{name}</h3>
-            <div className="flex items-baseline gap-1 mb-6">
-                <span className="text-4xl font-black text-slate-900 dark:text-white">{price}</span>
-                <span className="text-slate-500 font-medium">{period}</span>
-            </div>
-            <ul className="space-y-4 mb-8">
-                {features.map((f: string, i: number) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-300">
-                        <span className="material-symbols-outlined text-green-500 text-lg">check_circle</span>
-                        {f}
-                    </li>
-                ))}
-            </ul>
-            <Link to="/register" className={`w-full block text-center py-3 rounded-xl font-bold transition-all active:scale-95 ${highlight ? 'bg-primary text-white hover:bg-primary/90 shadow-lg shadow-primary/25' : 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700'}`}>
-                {cta}
-            </Link>
         </div>
     );
 }

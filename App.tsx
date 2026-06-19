@@ -21,8 +21,6 @@ const Financials = lazy(() => import('./pages/Financials'));
 const PublicForm = lazy(() => import('./pages/PublicForm'));
 const ClosedDeals = lazy(() => import('./pages/ClosedDeals'));
 const Settings = lazy(() => import('./pages/Settings'));
-const Pricing = lazy(() => import('./pages/Pricing'));
-const BillingCallback = lazy(() => import('./pages/BillingCallback'));
 const Landing = lazy(() => import('./pages/Landing'));
 
 // Loading fallback
@@ -141,14 +139,6 @@ const ProtectedLayout = () => {
             </button>
             <span className="text-sm font-medium">{user.name}</span>
             <span className="text-xs bg-gray-200 dark:bg-gray-700 px-2 py-0.5 rounded text-gray-600 dark:text-gray-300 font-bold">{user.role}</span>
-            {user.orgPlan && (
-              <span className={`text-xs px-2 py-0.5 rounded font-bold uppercase ${user.orgPlan === 'enterprise' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' :
-                user.orgPlan === 'pro' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' :
-                  'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
-                }`}>
-                {user.orgPlan}
-              </span>
-            )}
             <button onClick={logout} className="text-sm text-red-500 hover:underline">Sair</button>
             <div className="h-10 w-10 rounded-full bg-cover bg-center border-2 border-primary/20" style={{ backgroundImage: `url(${user.avatarUrl})` }}></div>
           </div>
@@ -195,8 +185,6 @@ export default function App() {
               <Route path="/deals/closed" element={<ClosedDeals />} />
               <Route path="/financials" element={<Financials />} />
               <Route path="/settings" element={<Settings />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/billing/callback" element={<BillingCallback />} />
             </Route>
           </Routes>
         </Suspense>

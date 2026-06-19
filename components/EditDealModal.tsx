@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Deal, DealStatus, EventType } from '../types';
+import { formatDateOnly } from '../utils/date';
 
 interface EditDealModalProps {
     deal: Deal;
@@ -257,7 +258,7 @@ export function EditDealModal({ deal, isOpen, onClose, onSave }: EditDealModalPr
                                             <p className={`text-sm font-medium ${task.isCompleted ? 'line-through text-gray-400' : ''}`}>
                                                 {task.name} {task.amount > 0 && <span className="text-primary font-bold"> - R$ {task.amount.toLocaleString('pt-BR')}</span>}
                                             </p>
-                                            <p className="text-xs text-gray-500">{new Date(task.dueDate).toLocaleDateString()}</p>
+                                            <p className="text-xs text-gray-500">{formatDateOnly(task.dueDate)}</p>
                                         </div>
                                     </div>
                                     <button

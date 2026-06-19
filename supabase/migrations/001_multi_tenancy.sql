@@ -1,5 +1,5 @@
 -- =============================================
--- Migration 001: Multi-Tenancy Foundation
+-- Migration 001: Organization Workspace Foundation
 -- =============================================
 
 -- 1. Create organizations table
@@ -7,12 +7,6 @@ CREATE TABLE IF NOT EXISTS organizations (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   slug TEXT UNIQUE NOT NULL,
-  plan TEXT DEFAULT 'free' CHECK (plan IN ('free', 'pro', 'enterprise')),
-  stripe_customer_id TEXT,
-  stripe_subscription_id TEXT,
-  max_leads INT DEFAULT 15,
-  max_members INT DEFAULT 2,
-  max_storage_mb INT DEFAULT 500,
   created_at TIMESTAMPTZ DEFAULT now(),
   owner_id UUID REFERENCES auth.users(id)
 );

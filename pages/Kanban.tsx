@@ -97,6 +97,7 @@ export default function Kanban() {
                     {isAdmin && <Column title="Prospecção" status={DealStatus.LEAD} deals={deals} color="blue" isAdmin={isAdmin} user={user} onMove={moveDeal} onEdit={setEditingDeal} onApply={handleManifestInterest} />}
                     <Column title="Negociação" status={DealStatus.NEGOTIATION} deals={deals} color="yellow" isAdmin={isAdmin} user={user} onMove={moveDeal} onEdit={setEditingDeal} onApply={handleManifestInterest} />
                     <Column title="Fechado" status={DealStatus.CLOSED} deals={deals} color="green" isAdmin={isAdmin} user={user} onMove={moveDeal} onEdit={setEditingDeal} onApply={handleManifestInterest} />
+                    {isAdmin && <Column title="Realizados" status={DealStatus.REALIZED} deals={deals} color="teal" isAdmin={isAdmin} user={user} onMove={moveDeal} onEdit={setEditingDeal} onApply={handleManifestInterest} />}
                     {isAdmin && <Column title="Perdido" status={DealStatus.LOST} deals={deals} color="red" isAdmin={isAdmin} user={user} onMove={moveDeal} onEdit={setEditingDeal} onApply={handleManifestInterest} />}
                 </div>
             </DragDropContext>
@@ -118,7 +119,7 @@ function Column({ title, status, deals, color, isAdmin, user, onMove, onEdit, on
         .sort((a: Deal, b: Deal) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()); // sort by oldest?
 
     // Color mapping
-    const bgColors: any = { blue: 'bg-blue-500', yellow: 'bg-yellow-500', green: 'bg-green-500', red: 'bg-red-500' };
+    const bgColors: any = { blue: 'bg-blue-500', yellow: 'bg-yellow-500', green: 'bg-green-500', teal: 'bg-teal-500', red: 'bg-red-500' };
 
     return (
         <Droppable droppableId={status} isDropDisabled={!isAdmin}>
@@ -231,11 +232,13 @@ function Column({ title, status, deals, color, isAdmin, user, onMove, onEdit, on
 function getNextStatus(current: DealStatus) {
     if (current === DealStatus.LEAD) return DealStatus.NEGOTIATION;
     if (current === DealStatus.NEGOTIATION) return DealStatus.CLOSED;
+    if (current === DealStatus.CLOSED) return DealStatus.REALIZED;
     return current;
 }
 function getPrevStatus(current: DealStatus) {
     if (current === DealStatus.NEGOTIATION) return DealStatus.LEAD;
     if (current === DealStatus.CLOSED) return DealStatus.NEGOTIATION;
+    if (current === DealStatus.REALIZED) return DealStatus.CLOSED;
     if (current === DealStatus.LOST) return DealStatus.LEAD;
     return current;
 }

@@ -4,6 +4,7 @@ import { Deal, DealDocument, DealStatus, FinancialEntry, PaymentTask, Transactio
 import { dataService } from '../services/dataService';
 import { EditDealModal } from '../components/EditDealModal';
 import { STAFF_ROLES } from '../constants/staffRoles';
+import { formatDateOnly } from '../utils/date';
 
 export default function DealDetails() {
     const { id } = useParams();
@@ -380,11 +381,25 @@ export default function DealDetails() {
             case DealStatus.LEAD: return { percent: 10, label: 'Lead Identificado', color: 'bg-blue-500' };
             case DealStatus.NEGOTIATION: return { percent: 60, label: 'Proposta Enviada', color: 'bg-primary' };
             case DealStatus.CLOSED: return { percent: 100, label: 'Fechado / Ganho', color: 'bg-green-500' };
+            case DealStatus.REALIZED: return { percent: 100, label: 'Evento Realizado', color: 'bg-teal-500' };
             case DealStatus.LOST: return { percent: 100, label: 'Perdido', color: 'bg-red-500' };
             default: return { percent: 0, label: 'Desconhecido', color: 'bg-gray-300' };
         }
     };
     const progress = getProgress(deal.status);
+    const isFinancialEnabled = deal.status === DealStatus.CLOSED || deal.status === DealStatus.REALIZED;
+    const statusTextColor = deal.status === DealStatus.LOST
+        ? 'text-red-500'
+        : deal.status === DealStatus.REALIZED
+            ? 'text-teal-600'
+            : 'text-primary';
+    const statusLabel: Record<DealStatus, string> = {
+        [DealStatus.LEAD]: 'Lead',
+        [DealStatus.NEGOTIATION]: 'Negociação',
+        [DealStatus.CLOSED]: 'Fechado',
+        [DealStatus.REALIZED]: 'Realizado',
+        [DealStatus.LOST]: 'Perdido'
+    };
 
     return (
         <div className="max-w-[1200px] mx-auto space-y-6 pb-12">
@@ -392,7 +407,7 @@ export default function DealDetails() {
             <nav className="flex flex-wrap gap-2 items-center text-sm">
                 <Link to="/events" className="text-[#617589] dark:text-slate-400 font-medium hover:text-primary">Funil de Vendas</Link>
                 <span className="text-[#617589] text-sm">/</span>
-                <span className="text-[#617589] dark:text-slate-400 font-medium capitalize">{deal.status.toLowerCase()}</span>
+                <span className="text-[#617589] dark:text-slate-400 font-medium">{statusLabel[deal.status]}</span>
                 <span className="text-[#617589] text-sm">/</span>
                 <span className="text-[#111418] dark:text-white font-bold">{deal.eventName}</span>
             </nav>
@@ -429,7 +444,7 @@ export default function DealDetails() {
                     <div className="flex gap-6 justify-between items-end">
                         <div className="flex flex-col">
                             <span className="text-[#617589] dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Estágio Atual</span>
-                            <p className={`text-lg font-bold ${deal.status === 'LOST' ? 'text-red-500' : 'text-primary'}`}>{progress.label}</p>
+                            <p className={`text-lg font-bold ${statusTextColor}`}>{progress.label}</p>
                         </div>
                         <p className="text-[#111418] dark:text-white text-sm font-bold bg-[#f0f2f4] dark:bg-gray-800 px-2 py-1 rounded">{progress.percent}% Completo</p>
                     </div>
@@ -631,7 +646,7 @@ export default function DealDetails() {
                                                     <p className="font-medium text-sm text-[#111418] dark:text-white">
                                                         {task.name} {task.amount > 0 && <span className="text-primary font-bold ml-1">- R$ {task.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>}
                                                     </p>
-                                                    <p className="text-xs text-gray-500">Vencimento: {new Date(task.dueDate).toLocaleDateString()}</p>
+                                                    <p className="text-xs text-gray-500">Vencimento: {formatDateOnly(task.dueDate)}</p>
                                                 </div>
                                             </div>
                                             {isAdmin && (
@@ -897,7 +912,7 @@ export default function DealDetails() {
                                 </div>
                             </div>
 
-                            {deal.status === DealStatus.CLOSED ? (
+                            {isFinancialEnabled ? (
                                 <div className="p-6">
                                     {/* Form */}
                                     <form onSubmit={handleAddFinancial} className="flex flex-wrap gap-3 mb-6 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800">

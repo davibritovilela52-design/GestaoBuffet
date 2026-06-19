@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { User, UserRole, UserStatus, PlanTier } from '../types';
+import { User, UserRole, UserStatus } from '../types';
 import { supabase } from '../services/supabaseClient';
 
 interface AuthContextType {
@@ -23,7 +23,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const mapProfileToUser = (
         profile: { id: string; nome: string; role: string; status?: string; email?: string; org_id?: string },
         email?: string | null,
-        org?: { name: string; plan: string } | null
+        org?: { name: string } | null
     ): User => {
         const role = profile.role === 'Administrador' ? UserRole.ADMIN : UserRole.EMPLOYEE;
         return {
@@ -34,7 +34,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             status: profile.status === 'INACTIVE' ? UserStatus.INACTIVE : UserStatus.ACTIVE,
             orgId: profile.org_id || undefined,
             orgName: org?.name || undefined,
-            orgPlan: (org?.plan as PlanTier) || undefined,
         };
     };
 
@@ -70,7 +69,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (!orgId) return null;
         const { data, error } = await supabase
             .from('organizations')
-            .select('name, plan')
+            .select('name')
             .eq('id', orgId)
             .maybeSingle();
         if (error) {

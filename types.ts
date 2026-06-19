@@ -8,27 +8,13 @@ export enum UserStatus {
   INACTIVE = 'INACTIVE'
 }
 
-export type PlanTier = 'free' | 'pro' | 'enterprise';
-
 export interface Organization {
   id: string;
   name: string;
   slug: string;
-  plan: PlanTier;
-  maxLeads: number;
-  maxMembers: number;
-  maxStorageMb: number;
-  stripeCustomerId?: string;
-  stripeSubscriptionId?: string;
   createdAt: string;
   ownerId: string;
 }
-
-export const PLAN_LIMITS: Record<PlanTier, { maxLeads: number; maxMembers: number; maxStorageMb: number }> = {
-  free: { maxLeads: 15, maxMembers: 2, maxStorageMb: 500 },
-  pro: { maxLeads: 500, maxMembers: 15, maxStorageMb: 5120 },
-  enterprise: { maxLeads: Infinity, maxMembers: Infinity, maxStorageMb: 51200 },
-};
 
 export interface User {
   id: string;
@@ -38,7 +24,6 @@ export interface User {
   status: UserStatus;
   orgId?: string;
   orgName?: string;
-  orgPlan?: PlanTier;
   avatarUrl?: string;
   rating?: number; // For employees
   whatsapp?: string;
@@ -49,6 +34,7 @@ export enum DealStatus {
   LEAD = 'LEAD',
   NEGOTIATION = 'NEGOTIATION',
   CLOSED = 'CLOSED',
+  REALIZED = 'REALIZED',
   LOST = 'LOST'
 }
 

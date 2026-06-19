@@ -22,6 +22,9 @@ const recalculateDealValue = (dealId: string) => {
     db.save();
 };
 
+const canManageDealFinancials = (status: DealStatus) =>
+    status === DealStatus.CLOSED || status === DealStatus.REALIZED;
+
 export const financialsApi = {
     async getAll(): Promise<FinancialEntry[]> {
         await delay(300);
@@ -40,8 +43,8 @@ export const financialsApi = {
         if (entry.dealId) {
             const deal = db.deals.find(d => d.id === entry.dealId);
             // Strict Rule: If linked to a deal, that deal MUST be Closed.
-            if (!deal || deal.status !== DealStatus.CLOSED) {
-                throw new Error("Ação Negada: Lançamentos financeiros vinculados a negócios só podem ser feitos se o negócio estiver FECHADO.");
+            if (!deal || !canManageDealFinancials(deal.status)) {
+                throw new Error("Ação Negada: Lançamentos financeiros vinculados a negócios só podem ser feitos se o negócio estiver FECHADO ou REALIZADO.");
             }
         } else {
             // No dealId provided
@@ -95,7 +98,7 @@ export const financialsApi = {
 
         if (targetDealId) {
             const deal = db.deals.find(d => d.id === targetDealId);
-            if (!deal || deal.status !== DealStatus.CLOSED) {
+            if (!deal || !canManageDealFinancials(deal.status)) {
                 throw new Error("Ação Negada: Lançamento vinculado a negócio em aberto/reaberto.");
             }
         } else {
@@ -124,8 +127,8 @@ export const financialsApi = {
         // Validation (existing logic)
         if (linkedDealId) {
             const deal = db.deals.find(d => d.id === linkedDealId);
-            if (!deal || deal.status !== DealStatus.CLOSED) {
-                throw new Error("Ação Negada: Lançamento vinculado a negócio que não está FECHADO.");
+            if (!deal || !canManageDealFinancials(deal.status)) {
+                throw new Error("Ação Negada: Lançamento vinculado a negócio que não está FECHADO ou REALIZADO.");
             }
         }
 
