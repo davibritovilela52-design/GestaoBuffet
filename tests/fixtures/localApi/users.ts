@@ -1,4 +1,4 @@
-import { User, UserRole, UserStatus } from "../types";
+import { User, UserRole, UserStatus } from "../../../types";
 import { db } from "./db";
 
 // Simulate latency

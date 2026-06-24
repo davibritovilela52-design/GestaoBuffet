@@ -1,4 +1,4 @@
-import { User } from "../types";
+import { User } from "../../../types";
 import { db } from "./db";
 
 export const authApi = {

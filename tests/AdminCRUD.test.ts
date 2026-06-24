@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { dealsApi } from '../api/deals';
-import { financialsApi } from '../api/financials';
-import { usersApi } from '../api/users';
-import { db } from '../api/db';
+import { dealsApi } from './fixtures/localApi/deals';
+import { financialsApi } from './fixtures/localApi/financials';
+import { usersApi } from './fixtures/localApi/users';
+import { db } from './fixtures/localApi/db';
 import { User, UserRole, UserStatus, DealStatus, Deal, FinancialEntry, EventType, TransactionType } from '../types';
 
 describe('Admin CRUD Enforcement', () => {

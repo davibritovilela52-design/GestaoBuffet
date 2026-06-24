@@ -32,10 +32,10 @@ export default function Landing() {
             </nav>
 
             {/* Hero Section */}
-            <section className="relative pt-20 pb-20 lg:pt-32 lg:pb-28">
+            <section className="relative pt-20 pb-20 lg:pt-28 lg:pb-24">
                 <div className="absolute inset-0 -z-10 overflow-hidden">
-                    <div className="absolute -top-20 right-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl opacity-50 animate-pulse"></div>
-                    <div className="absolute top-40 left-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-3xl opacity-50"></div>
+                    <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,118,110,0.08)_1px,transparent_1px),linear-gradient(0deg,rgba(47,111,237,0.06)_1px,transparent_1px)] bg-[size:42px_42px]"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-white/80 dark:from-[#0f172a]/80 dark:to-[#0f172a]"></div>
                 </div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -43,7 +43,7 @@ export default function Landing() {
                         <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
                         Ambiente pessoal para gestão do buffet
                     </div>
-                    <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-slate-900 dark:text-white mb-6 leading-tight">
+                    <h1 className="font-display text-4xl sm:text-6xl font-black text-slate-900 dark:text-white mb-6 leading-tight">
                         A plataforma completa para <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">gerenciar seu Buffet</span>
                     </h1>

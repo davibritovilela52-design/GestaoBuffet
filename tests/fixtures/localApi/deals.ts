@@ -1,4 +1,4 @@
-import { Deal, DealStatus, User, UserRole } from "../types";
+import { Deal, DealStatus, User, UserRole } from "../../../types";
 import { db } from "./db";
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));

@@ -77,23 +77,25 @@ export default function Kanban() {
     };
 
     const isAdmin = user.role === UserRole.ADMIN;
+    const publicFormPath = user.orgSlug ? `/public-request/${user.orgSlug}` : '/public-request';
 
     return (
         <div className="flex flex-col gap-6 h-full">
-            <div className="flex justify-between items-end">
+            <div className="operational-hero rounded-[24px] p-6 flex flex-col lg:flex-row justify-between lg:items-end gap-4">
                 <div>
-                    <h1 className="text-3xl font-black">{isAdmin ? 'Funil de Vendas' : 'Oportunidades'}</h1>
+                    <p className="section-eyebrow mb-2">{isAdmin ? 'Pipeline comercial' : 'Portal de oportunidades'}</p>
+                    <h1 className="page-title">{isAdmin ? 'Funil de Vendas' : 'Oportunidades'}</h1>
                     <p className="text-[#617589]">
                         {isAdmin ? 'Arraste os cards para atualizar o status das negociações.' : 'Veja eventos disponíveis e candidate-se.'}
                     </p>
                 </div>
                 {isAdmin && (
-                    <Link to="/public-request" target="_blank" className="bg-primary text-white px-4 py-2 rounded-lg font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">Novo Lead</Link>
+                    <Link to={publicFormPath} target="_blank" className="btn-primary text-white px-5 py-3 rounded-2xl font-bold transition-all">Novo Lead</Link>
                 )}
             </div>
 
             <DragDropContext onDragEnd={onDragEnd}>
-                <div className="flex gap-4 overflow-x-auto pb-6 h-full items-start min-h-[calc(100vh-200px)]">
+                <div className="flex gap-5 overflow-x-auto pb-6 h-full items-start min-h-[calc(100vh-240px)]">
                     {isAdmin && <Column title="Prospecção" status={DealStatus.LEAD} deals={deals} color="blue" isAdmin={isAdmin} user={user} onMove={moveDeal} onEdit={setEditingDeal} onApply={handleManifestInterest} />}
                     <Column title="Negociação" status={DealStatus.NEGOTIATION} deals={deals} color="yellow" isAdmin={isAdmin} user={user} onMove={moveDeal} onEdit={setEditingDeal} onApply={handleManifestInterest} />
                     <Column title="Fechado" status={DealStatus.CLOSED} deals={deals} color="green" isAdmin={isAdmin} user={user} onMove={moveDeal} onEdit={setEditingDeal} onApply={handleManifestInterest} />
@@ -127,12 +129,12 @@ function Column({ title, status, deals, color, isAdmin, user, onMove, onEdit, on
                 <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className={`flex-1 min-w-[280px] max-w-[350px] flex flex-col gap-4 bg-[#f8fafc] dark:bg-[#1a2431] p-4 rounded-2xl border border-gray-100 dark:border-gray-800 transition-colors ${snapshot.isDraggingOver ? 'bg-blue-50/50 dark:bg-blue-900/10 border-blue-200' : ''}`}
+                    className={`kanban-column flex-1 min-w-[300px] max-w-[360px] flex flex-col gap-4 p-4 transition-colors ${snapshot.isDraggingOver ? 'bg-blue-50/50 dark:bg-blue-900/10 border-blue-200' : ''}`}
                 >
                     <div className="flex items-center gap-2 px-2 py-1">
                         <div className={`w-2 h-2 rounded-full ${bgColors[color]}`}></div>
-                        <h3 className="font-bold text-sm uppercase tracking-wider">{title}</h3>
-                        <span className="bg-[#dbe0e6] dark:bg-[#2d3a4d] px-2 py-0.5 rounded text-[10px] font-bold">{columnDeals.length}</span>
+                        <h3 className="font-display font-black text-base uppercase">{title}</h3>
+                        <span className="bg-white/70 dark:bg-white/10 border border-gray-200/70 dark:border-white/10 px-2 py-0.5 rounded-full text-[10px] font-bold">{columnDeals.length}</span>
                     </div>
 
                     <div className="flex flex-col gap-3 min-h-[100px]">
@@ -144,7 +146,7 @@ function Column({ title, status, deals, color, isAdmin, user, onMove, onEdit, on
                                         {...(isAdmin ? provided.draggableProps : {})}
                                         {...(isAdmin ? provided.dragHandleProps : {})}
                                         style={{ ...provided.draggableProps.style }}
-                                        className={`bg-white dark:bg-[#101922] p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 flex flex-col gap-3 group transition-all ${isAdmin ? 'cursor-grab active:cursor-grabbing' : ''} ${snapshot.isDragging ? 'shadow-2xl ring-2 ring-primary rotate-1 z-50 scale-105' : 'hover:shadow-md hover:border-primary/30'}`}
+                                        className={`deal-card p-4 flex flex-col gap-3 group transition-all ${isAdmin ? 'cursor-grab active:cursor-grabbing' : ''} ${snapshot.isDragging ? 'shadow-2xl ring-2 ring-primary rotate-1 z-50 scale-105' : 'hover:border-primary/30 hover:-translate-y-0.5'}`}
                                     >
                                         {(() => {
                                             const isAlreadyAssigned = !isAdmin && deal.assignments?.some((a: any) => a.userId === user.id);

@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { User, UserRole, UserStatus } from '../types';
-import { supabase } from '../services/supabaseClient';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { authService } from '../services/authService';
+import { User, UserRole } from '../types';
 
 interface AuthContextType {
     user: User | null;
@@ -20,83 +20,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    const mapProfileToUser = (
-        profile: { id: string; nome: string; role: string; status?: string; email?: string; org_id?: string },
-        email?: string | null,
-        org?: { name: string } | null
-    ): User => {
-        const role = profile.role === 'Administrador' ? UserRole.ADMIN : UserRole.EMPLOYEE;
-        return {
-            id: profile.id,
-            name: profile.nome,
-            email: profile.email || email || '',
-            role,
-            status: profile.status === 'INACTIVE' ? UserStatus.INACTIVE : UserStatus.ACTIVE,
-            orgId: profile.org_id || undefined,
-            orgName: org?.name || undefined,
-        };
-    };
-
-    const ensureProfile = useCallback(async (authUser: { id: string; email?: string | null; user_metadata?: { nome?: string; role?: string } }) => {
-        const { data, error } = await supabase
-            .from('profiles')
-            .select('id, nome, role, status, email, org_id')
-            .eq('id', authUser.id)
-            .maybeSingle();
-
-        if (error) throw error;
-        if (data) return data;
-
-        const fallbackName = authUser.user_metadata?.nome || authUser.email?.split('@')[0] || 'Usuario';
-        const fallbackRole = authUser.user_metadata?.role === 'Administrador' ? 'Administrador' : 'Funcionario';
-        const { data: inserted, error: insertError } = await supabase
-            .from('profiles')
-            .insert({
-                id: authUser.id,
-                nome: fallbackName,
-                role: fallbackRole,
-                status: 'ACTIVE',
-                email: authUser.email || ''
-            })
-            .select('id, nome, role, status, email, org_id')
-            .single();
-
-        if (insertError) throw insertError;
-        return inserted;
-    }, []);
-
-    const loadOrganization = useCallback(async (orgId: string | null | undefined) => {
-        if (!orgId) return null;
-        const { data, error } = await supabase
-            .from('organizations')
-            .select('name')
-            .eq('id', orgId)
-            .maybeSingle();
-        if (error) {
-            console.error('Error loading organization:', error);
-            return null;
-        }
-        return data;
-    }, []);
-
     const loadUserFromSession = useCallback(async () => {
-        const { data, error } = await supabase.auth.getSession();
-        if (error) throw error;
-        const authUser = data.session?.user;
-        if (!authUser) {
-            setUser(null);
-            return;
-        }
-
-        const profile = await ensureProfile({
-            id: authUser.id,
-            email: authUser.email,
-            user_metadata: authUser.user_metadata as { nome?: string; role?: string }
-        });
-
-        const org = await loadOrganization(profile.org_id);
-        setUser(mapProfileToUser(profile, authUser.email, org));
-    }, [ensureProfile, loadOrganization]);
+        const currentUser = await authService.getCurrentUser();
+        setUser(currentUser);
+    }, []);
 
     useEffect(() => {
         const validateSession = async () => {
@@ -112,7 +39,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         validateSession();
 
-        const { data: authListener } = supabase.auth.onAuthStateChange(() => {
+        const subscription = authService.onAuthStateChange(() => {
             loadUserFromSession().catch((error) => {
                 console.error('Session update error:', error);
                 setUser(null);
@@ -120,33 +47,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
 
         return () => {
-            authListener.subscription.unsubscribe();
+            subscription.unsubscribe();
         };
     }, [loadUserFromSession]);
 
     const login = useCallback(async (email: string, password: string) => {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-        await loadUserFromSession();
-    }, [loadUserFromSession]);
+        const currentUser = await authService.login(email, password);
+        setUser(currentUser);
+    }, []);
 
     const register = useCallback(async (name: string, email: string, password: string) => {
-        const { data, error } = await supabase.auth.signUp({
-            email,
-            password,
-            options: {
-                data: {
-                    nome: name,
-                    role: 'Administrador' // New signups are always org admins
-                }
-            }
-        });
-        if (error) throw error;
-        if (!data.user) throw new Error('Erro ao criar usuário');
+        await authService.register(name, email, password);
     }, []);
 
     const logout = useCallback(() => {
-        supabase.auth.signOut().finally(() => setUser(null));
+        authService.logout().finally(() => setUser(null));
     }, []);
 
     const refreshUser = useCallback(async () => {

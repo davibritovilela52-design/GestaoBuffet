@@ -16,7 +16,7 @@ export default function ClosedDeals() {
 
     useEffect(() => {
         dataService.getDeals().then(data => {
-            setDeals(data.filter(d => d.status === DealStatus.CLOSED));
+            setDeals(data.filter(d => d.status === DealStatus.CLOSED || d.status === DealStatus.REALIZED));
         });
     }, []);
 

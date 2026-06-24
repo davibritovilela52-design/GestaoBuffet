@@ -1,12 +1,16 @@
 import React from 'react';
-import { PaymentAlert, AlertType } from '../types';
+import { PaymentAlert } from '../types';
 import { formatDateOnly } from '../utils/date';
 
+type AlertsPanelItem = PaymentAlert & {
+    role?: string;
+};
+
 interface AlertsPanelProps {
-    alerts: any[];
+    alerts: AlertsPanelItem[];
     onResolve: (alertId: string) => void;
-    onAcceptInvitation?: (alert: any) => void;
-    onRejectInvitation?: (alert: any) => void;
+    onAcceptInvitation?: (alert: AlertsPanelItem) => void;
+    onRejectInvitation?: (alert: AlertsPanelItem) => void;
     onClose: () => void;
     userRole: string;
 }

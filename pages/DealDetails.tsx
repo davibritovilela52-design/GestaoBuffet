@@ -416,7 +416,7 @@ export default function DealDetails() {
             <div className="bg-white dark:bg-[#1a2632] rounded-xl shadow-sm border border-[#f0f2f4] dark:border-gray-800 p-6">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div className="flex flex-col gap-1">
-                        <h1 className="text-[#111418] dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">{deal.clientName}</h1>
+                        <h1 className="font-display text-[#111418] dark:text-white text-3xl font-black leading-tight">{deal.clientName}</h1>
                         <div className="flex items-center gap-2 text-[#617589] dark:text-slate-400">
                             <span className="material-symbols-outlined text-lg">calendar_today</span>
                             <p className="text-base font-normal">Data do Evento: {deal.eventDate}</p>

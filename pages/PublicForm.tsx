@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { dataService } from '../services/dataService';
+import { useAuth } from '../context/AuthContext';
 import { DealStatus, EventType } from '../types';
 
 export default function PublicForm() {
+    const { orgSlug } = useParams<{ orgSlug?: string }>();
+    const { user, isLoading } = useAuth();
     const [loading, setLoading] = useState(false);
     const [toast, setToast] = useState<{ message: string, type: 'success' | 'error' } | null>(null);
+    const targetOrgSlug = orgSlug || user?.orgSlug;
 
     const [formData, setFormData] = useState({
         fullName: '',
@@ -42,7 +47,7 @@ export default function PublicForm() {
                 throw new Error("A quantidade de convidados deve ser maior que zero.");
             }
 
-            await dataService.createLead({
+            const leadPayload = {
                 clientName: formData.fullName,
                 clientEmail: formData.email,
                 clientPhone: formData.phone,
@@ -56,7 +61,15 @@ export default function PublicForm() {
                 spaceType: formData.spaceType,
                 notes: formData.notes,
                 status: DealStatus.LEAD
-            });
+            };
+
+            if (targetOrgSlug) {
+                await dataService.createPublicLead(targetOrgSlug, leadPayload);
+            } else if (user) {
+                await dataService.createLead(leadPayload);
+            } else {
+                throw new Error("Link de solicitação inválido. Peça um novo link ao buffet.");
+            }
 
             showToast("✅ Solicitação enviada com sucesso! Em breve entraremos em contato.", "success");
 
@@ -76,6 +89,33 @@ export default function PublicForm() {
     const handleChange = (e: any) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
+    if (isLoading && !orgSlug) {
+        return (
+            <div className="min-h-screen bg-gray-50 text-[#111418] flex items-center justify-center">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
+            </div>
+        );
+    }
+
+    if (!targetOrgSlug && !user) {
+        return (
+            <div className="min-h-screen bg-gray-50 text-[#111418] flex items-center justify-center px-4">
+                <div className="max-w-md w-full bg-white border border-gray-100 rounded-2xl shadow-xl p-8 text-center">
+                    <div className="mx-auto mb-4 size-12 rounded-full bg-red-50 text-red-600 flex items-center justify-center">
+                        <span className="material-symbols-outlined">link_off</span>
+                    </div>
+                    <h1 className="text-xl font-black text-gray-900 mb-2">Link de solicitacao invalido</h1>
+                    <p className="text-sm text-gray-500 mb-6">
+                        Peca ao buffet um novo link de orcamento para enviar sua solicitacao.
+                    </p>
+                    <Link to="/" className="inline-flex items-center justify-center rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white hover:bg-primary/90">
+                        Voltar
+                    </Link>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-gray-50 text-[#111418] relative">

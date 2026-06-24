@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
@@ -29,60 +29,101 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-[#0f172a] flex flex-col items-center justify-center p-4">
-            <div className="w-full max-w-[400px] bg-white dark:bg-[#1e293b] shadow-xl rounded-2xl p-8 border border-gray-100 dark:border-gray-800">
-                <div className="text-center mb-8">
-                    <div className="inline-flex p-3 bg-primary/10 rounded-xl mb-4">
-                        <span className="material-symbols-outlined text-primary text-3xl">restaurant</span>
-                    </div>
-                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Bem-vindo(a)</h1>
-                    <p className="text-gray-500 text-sm">Entre no Gestor BuffetNoCapricho</p>
-                </div>
-
-                <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="auth-shell min-h-screen flex items-center justify-center p-6 text-[#111418] dark:text-white">
+            <div className="w-full max-w-6xl grid lg:grid-cols-[1fr_440px] gap-6 items-stretch">
+                <section className="hidden lg:flex surface-card rounded-[28px] p-8 min-h-[620px] flex-col justify-between overflow-hidden">
                     <div>
-                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Email</label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="w-full rounded-lg border-gray-300 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Senha</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full rounded-lg border-gray-300 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                        />
-                    </div>
-
-                    {error && (
-                        <div className="p-3 bg-red-50 text-red-600 text-xs font-bold rounded-lg flex items-center gap-2">
-                            <span className="material-symbols-outlined text-sm">error</span>
-                            {error}
+                        <div className="inline-flex items-center gap-3 rounded-2xl bg-white/70 dark:bg-white/10 border border-white/70 dark:border-white/10 px-4 py-3">
+                            <div className="brand-mark rounded-xl p-2 text-white">
+                                <span className="material-symbols-outlined">restaurant</span>
+                            </div>
+                            <div>
+                                <p className="font-display text-xl font-black leading-none">BuffetNoCapricho</p>
+                                <p className="text-xs font-bold text-gray-500 dark:text-gray-400">Command center</p>
+                            </div>
                         </div>
-                    )}
+                    </div>
 
-                    <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-lg shadow-lg shadow-primary/20 transition-transform active:scale-[0.98] disabled:opacity-50"
-                    >
-                        {isSubmitting ? 'Entrando...' : 'Entrar'}
-                    </button>
-                </form>
+                    <div className="space-y-6">
+                        <div>
+                            <p className="section-eyebrow mb-3">Operacao em tempo real</p>
+                            <h1 className="font-display text-5xl font-black leading-tight max-w-xl">
+                                Eventos, equipe e financeiro no mesmo ritmo.
+                            </h1>
+                        </div>
+                        <div className="grid grid-cols-3 gap-3 max-w-xl">
+                            {[
+                                ['Leads', '47', 'groups'],
+                                ['Eventos', '18', 'event_available'],
+                                ['Resultado', '53k', 'payments'],
+                            ].map(([label, value, icon]) => (
+                                <div key={label} className="rounded-2xl bg-white/70 dark:bg-white/10 border border-white/70 dark:border-white/10 p-4">
+                                    <span className="material-symbols-outlined text-primary">{icon}</span>
+                                    <p className="mt-3 text-xs font-bold text-gray-500 dark:text-gray-400">{label}</p>
+                                    <p className="font-display text-3xl font-black">{value}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
 
-                <div className="mt-6 text-center">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Não tem uma conta?{' '}
-                        <Link to="/register" className="text-primary font-semibold hover:underline">
-                            Cadastre-se
-                        </Link>
-                    </p>
-                </div>
+                <section className="auth-panel rounded-[28px] p-8 sm:p-10 flex flex-col justify-center">
+                    <div className="mb-8">
+                        <div className="inline-flex p-3 brand-mark rounded-2xl mb-5 text-white">
+                            <span className="material-symbols-outlined text-3xl">restaurant</span>
+                        </div>
+                        <p className="section-eyebrow mb-2">Acesso seguro</p>
+                        <h1 className="font-display text-4xl font-black text-gray-900 dark:text-white">Bem-vindo</h1>
+                        <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">Entre para gerenciar a operacao do buffet.</p>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="w-full p-3.5 text-sm"
+                                autoComplete="email"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Senha</label>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full p-3.5 text-sm"
+                                autoComplete="current-password"
+                            />
+                        </div>
+
+                        {error && (
+                            <div className="p-3 bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-300 text-xs font-bold rounded-2xl flex items-center gap-2 border border-red-100 dark:border-red-900/50">
+                                <span className="material-symbols-outlined text-sm">error</span>
+                                {error}
+                            </div>
+                        )}
+
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="btn-primary w-full font-bold py-3.5 rounded-2xl transition-all active:scale-[0.98] disabled:opacity-50"
+                        >
+                            {isSubmitting ? 'Entrando...' : 'Entrar'}
+                        </button>
+                    </form>
+
+                    <div className="mt-7 text-center">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                            Nao tem uma conta?{' '}
+                            <Link to="/register" className="text-primary font-bold hover:underline">
+                                Cadastre-se
+                            </Link>
+                        </p>
+                    </div>
+                </section>
             </div>
         </div>
     );

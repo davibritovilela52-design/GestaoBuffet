@@ -1,4 +1,4 @@
-import { Deal, FinancialEntry, User } from "../types";
+import { Deal, FinancialEntry, User } from "../../../types";
 import { MOCK_DEALS, MOCK_FINANCIALS, MOCK_USERS } from "./mockData";
 
 const STORAGE_KEYS = {

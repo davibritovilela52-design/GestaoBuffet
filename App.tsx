@@ -1,13 +1,11 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import { HashRouter, Routes, Route, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 // Components
 import Sidebar from './components/Sidebar';
 import { AlertsPanel } from './components/AlertsPanel';
-import { dataService } from './services/dataService';
-import { PaymentAlert, UserRole } from './types';
-import { useState, useEffect } from 'react';
+import { AppAlert, useAlerts } from './hooks/useAlerts';
 
 // Lazy loading de páginas
 const Login = lazy(() => import('./pages/Login'));
@@ -33,55 +31,28 @@ const LoadingFallback = () => (
 const ProtectedLayout = () => {
   const { user, isAuthenticated, isLoading, logout, needsOnboarding } = useAuth();
   const location = useLocation();
-  const [alerts, setAlerts] = useState<any[]>([]);
+  const { alerts, resolveAlert, acceptInvitation, rejectInvitation } = useAlerts(user);
   const [isAlertsOpen, setIsAlertsOpen] = useState(false);
 
-  useEffect(() => {
-    if (user) {
-      const initAlerts = async () => {
-        try {
-          if (user.role === UserRole.ADMIN) {
-            await dataService.checkAndGenerateAlerts();
-          }
-          const activeAlerts = await dataService.getAlerts(user);
-          setAlerts(activeAlerts);
-        } catch (error) {
-          console.error("Failed to fetch alerts:", error);
-        }
-      };
-      initAlerts();
-
-      // Check every 10 minutes (staff invitations might be more frequent than payments)
-      const interval = setInterval(initAlerts, 10 * 60 * 1000);
-      return () => clearInterval(interval);
-    }
-  }, [user]);
-
   const handleResolveAlert = async (id: string) => {
-    if (!user) return;
     try {
-      await dataService.resolveAlert(id, user);
-      setAlerts(prev => prev.filter(a => a.id !== id));
+      await resolveAlert(id);
     } catch (error) {
       alert("Erro ao resolver alerta.");
     }
   };
 
-  const handleAcceptInvitation = async (alert: any) => {
-    if (!user) return;
+  const handleAcceptInvitation = async (alert: AppAlert) => {
     try {
-      await dataService.acceptAssignment(alert.leadId, user.id);
-      setAlerts(prev => prev.filter(a => a.id !== alert.id));
+      await acceptInvitation(alert);
     } catch (error: any) {
       window.alert("Erro ao aceitar convite: " + error.message);
     }
   };
 
-  const handleRejectInvitation = async (alert: any) => {
-    if (!user) return;
+  const handleRejectInvitation = async (alert: AppAlert) => {
     try {
-      await dataService.rejectAssignment(alert.leadId, user.id);
-      setAlerts(prev => prev.filter(a => a.id !== alert.id));
+      await rejectInvitation(alert);
     } catch (error: any) {
       window.alert("Erro ao recusar convite: " + error.message);
     }
@@ -113,14 +84,14 @@ const ProtectedLayout = () => {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background-light dark:bg-background-dark text-[#111418] dark:text-white">
+    <div className="app-shell flex h-screen overflow-hidden text-[#111418] dark:text-white">
       <Sidebar />
-      <main className="flex-1 flex flex-col overflow-y-auto">
-        <header className="sticky top-0 z-10 flex items-center justify-between bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-solid border-[#dbe0e6] dark:border-gray-800 px-8 py-4">
+      <main className="app-main flex-1 flex flex-col overflow-y-auto">
+        <header className="app-header sticky top-0 z-10 flex items-center justify-between backdrop-blur-md px-8 py-4">
           <div className="flex items-center gap-3">
-            <h2 className="text-[#111418] dark:text-white text-xl font-bold tracking-tight capitalize">{getPageTitle(location.pathname)}</h2>
+            <h2 className="font-display text-[#111418] dark:text-white text-2xl font-black capitalize">{getPageTitle(location.pathname)}</h2>
             {user.orgName && (
-              <span className="text-xs bg-primary/10 text-primary px-2.5 py-1 rounded-full font-semibold">
+              <span className="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-full font-bold border border-primary/10">
                 {user.orgName}
               </span>
             )}
@@ -128,7 +99,7 @@ const ProtectedLayout = () => {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsAlertsOpen(!isAlertsOpen)}
-              className="relative p-2 text-[#617589] hover:text-primary transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
+              className="relative p-2.5 text-[#617589] hover:text-primary transition-colors hover:bg-white/70 dark:hover:bg-white/10 rounded-xl border border-transparent hover:border-primary/10"
             >
               <span className="material-symbols-outlined">notifications</span>
               {alerts.length > 0 && (
@@ -137,9 +108,9 @@ const ProtectedLayout = () => {
                 </span>
               )}
             </button>
-            <span className="text-sm font-medium">{user.name}</span>
-            <span className="text-xs bg-gray-200 dark:bg-gray-700 px-2 py-0.5 rounded text-gray-600 dark:text-gray-300 font-bold">{user.role}</span>
-            <button onClick={logout} className="text-sm text-red-500 hover:underline">Sair</button>
+            <span className="text-sm font-bold">{user.name}</span>
+            <span className="text-xs bg-white/70 dark:bg-white/10 px-2.5 py-1 rounded-full text-gray-600 dark:text-gray-300 font-bold border border-gray-200/70 dark:border-white/10">{user.role}</span>
+            <button onClick={logout} className="text-sm text-red-500 hover:text-red-600 font-bold">Sair</button>
             <div className="h-10 w-10 rounded-full bg-cover bg-center border-2 border-primary/20" style={{ backgroundImage: `url(${user.avatarUrl})` }}></div>
           </div>
         </header>
@@ -154,7 +125,7 @@ const ProtectedLayout = () => {
             userRole={user.role}
           />
         )}
-        <div className="p-8">
+        <div className="app-content p-8">
           <Suspense fallback={<LoadingFallback />}>
             <Outlet context={{ user }} />
           </Suspense>
@@ -172,6 +143,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/public-request" element={<PublicForm />} />
+            <Route path="/public-request/:orgSlug" element={<PublicForm />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/onboarding" element={<Onboarding />} />

@@ -24,6 +24,7 @@ export interface User {
   status: UserStatus;
   orgId?: string;
   orgName?: string;
+  orgSlug?: string;
   avatarUrl?: string;
   rating?: number; // For employees
   whatsapp?: string;

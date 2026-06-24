@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { financialsApi } from '../api/financials';
-import { dealsApi } from '../api/deals';
-import { db } from '../api/db';
+import { financialsApi } from './fixtures/localApi/financials';
+import { dealsApi } from './fixtures/localApi/deals';
+import { db } from './fixtures/localApi/db';
 import { User, UserRole, UserStatus, DealStatus, TransactionType } from '../types';
 
 describe('Dynamic Deal Value Logic', () => {

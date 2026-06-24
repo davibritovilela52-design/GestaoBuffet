@@ -1,4 +1,4 @@
-import { DealStatus, FinancialEntry, KPI, User, UserRole } from "../types";
+import { DealStatus, FinancialEntry, KPI, User, UserRole } from "../../../types";
 import { db } from "./db";
 
 // Simulate latency
@@ -70,7 +70,7 @@ export const financialsApi = {
         await delay(200);
         const totalLeads = db.deals.length;
         const negotiationCount = db.deals.filter(d => d.status === DealStatus.NEGOTIATION).length;
-        const closedCount = db.deals.filter(d => d.status === DealStatus.CLOSED).length;
+        const closedCount = db.deals.filter(d => d.status === DealStatus.CLOSED || d.status === DealStatus.REALIZED).length;
         const lostCount = db.deals.filter(d => d.status === DealStatus.LOST).length;
 
         const income = db.financials.filter(f => f.type === 'INCOME').reduce((sum, f) => sum + f.amount, 0);

@@ -1,4 +1,4 @@
-import { Deal, DealStatus, EventType, FinancialEntry, TransactionType, User, UserRole, UserStatus } from "../types";
+import { Deal, DealStatus, EventType, FinancialEntry, TransactionType, User, UserRole, UserStatus } from "../../../types";
 
 export const MOCK_USERS: User[] = [
   {
