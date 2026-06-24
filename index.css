@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --color-canvas: #f7f9fc;
   --color-canvas-strong: #edf3f8;

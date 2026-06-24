@@ -87,17 +87,20 @@ const ProtectedLayout = () => {
     <div className="app-shell flex h-screen overflow-hidden text-[#111418] dark:text-white">
       <Sidebar />
       <main className="app-main flex-1 flex flex-col overflow-y-auto">
-        <header className="app-header sticky top-0 z-10 flex items-center justify-between backdrop-blur-md px-8 py-4">
-          <div className="flex items-center gap-3">
-            <h2 className="font-display text-[#111418] dark:text-white text-2xl font-black capitalize">{getPageTitle(location.pathname)}</h2>
+        <header className="app-header sticky top-0 z-10 flex items-center justify-between gap-3 backdrop-blur-md px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+          <div className="flex items-center gap-3 min-w-0">
+            <h2 className="font-display text-[#111418] dark:text-white text-xl sm:text-2xl font-black capitalize truncate">{getPageTitle(location.pathname)}</h2>
             {user.orgName && (
-              <span className="text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-full font-bold border border-primary/10">
+              <span className="hidden sm:inline-flex text-xs bg-primary/10 text-primary px-3 py-1.5 rounded-full font-bold border border-primary/10 whitespace-nowrap">
                 {user.orgName}
               </span>
             )}
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
             <button
+              type="button"
+              aria-label={isAlertsOpen ? 'Fechar alertas' : 'Abrir alertas'}
+              aria-expanded={isAlertsOpen}
               onClick={() => setIsAlertsOpen(!isAlertsOpen)}
               className="relative p-2.5 text-[#617589] hover:text-primary transition-colors hover:bg-white/70 dark:hover:bg-white/10 rounded-xl border border-transparent hover:border-primary/10"
             >
@@ -108,10 +111,10 @@ const ProtectedLayout = () => {
                 </span>
               )}
             </button>
-            <span className="text-sm font-bold">{user.name}</span>
-            <span className="text-xs bg-white/70 dark:bg-white/10 px-2.5 py-1 rounded-full text-gray-600 dark:text-gray-300 font-bold border border-gray-200/70 dark:border-white/10">{user.role}</span>
+            <span className="hidden sm:inline text-sm font-bold">{user.name}</span>
+            <span className="hidden md:inline-flex text-xs bg-white/70 dark:bg-white/10 px-2.5 py-1 rounded-full text-gray-600 dark:text-gray-300 font-bold border border-gray-200/70 dark:border-white/10">{user.role}</span>
             <button onClick={logout} className="text-sm text-red-500 hover:text-red-600 font-bold">Sair</button>
-            <div className="h-10 w-10 rounded-full bg-cover bg-center border-2 border-primary/20" style={{ backgroundImage: `url(${user.avatarUrl})` }}></div>
+            <div className="hidden sm:block h-10 w-10 rounded-full bg-cover bg-center border-2 border-primary/20" style={{ backgroundImage: `url(${user.avatarUrl})` }}></div>
           </div>
         </header>
 

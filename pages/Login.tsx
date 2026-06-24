@@ -11,18 +11,35 @@ export default function Login() {
     const navigate = useNavigate();
     const { login } = useAuth();
 
+    const getLoginErrorMessage = (err: any) => {
+        const rawMessage = String(err?.message || '').toLowerCase();
+        if (rawMessage.includes('invalid login credentials')) {
+            return 'Email ou senha inválidos.';
+        }
+        return 'Erro ao entrar. Verifique seu email e senha.';
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
+
+        if (!email.trim()) {
+            setError('Informe seu email.');
+            return;
+        }
+
+        if (!password) {
+            setError('Informe sua senha.');
+            return;
+        }
+
         setIsSubmitting(true);
 
         try {
-            await login(email, password);
+            await login(email.trim(), password);
             navigate('/dashboard');
         } catch (err: any) {
-            const message = err?.message || 'Erro ao entrar. Verifique seu email e senha.';
-            setError(message);
-            console.error(err);
+            setError(getLoginErrorMessage(err));
         } finally {
             setIsSubmitting(false);
         }
@@ -46,7 +63,7 @@ export default function Login() {
 
                     <div className="space-y-6">
                         <div>
-                            <p className="section-eyebrow mb-3">Operacao em tempo real</p>
+                            <p className="section-eyebrow mb-3">Operação em tempo real</p>
                             <h1 className="font-display text-5xl font-black leading-tight max-w-xl">
                                 Eventos, equipe e financeiro no mesmo ritmo.
                             </h1>
@@ -74,33 +91,43 @@ export default function Login() {
                         </div>
                         <p className="section-eyebrow mb-2">Acesso seguro</p>
                         <h1 className="font-display text-4xl font-black text-gray-900 dark:text-white">Bem-vindo</h1>
-                        <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">Entre para gerenciar a operacao do buffet.</p>
+                        <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">Entre para gerenciar a operação do buffet.</p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                         <div>
-                            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                            <label htmlFor="login-email" className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Email</label>
                             <input
+                                id="login-email"
+                                name="email"
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="w-full p-3.5 text-sm"
                                 autoComplete="email"
+                                required
+                                aria-invalid={!!error}
+                                aria-describedby={error ? 'login-error' : undefined}
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Senha</label>
+                            <label htmlFor="login-password" className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Senha</label>
                             <input
+                                id="login-password"
+                                name="password"
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="w-full p-3.5 text-sm"
                                 autoComplete="current-password"
+                                required
+                                aria-invalid={!!error}
+                                aria-describedby={error ? 'login-error' : undefined}
                             />
                         </div>
 
                         {error && (
-                            <div className="p-3 bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-300 text-xs font-bold rounded-2xl flex items-center gap-2 border border-red-100 dark:border-red-900/50">
+                            <div id="login-error" role="alert" className="p-3 bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-300 text-xs font-bold rounded-2xl flex items-center gap-2 border border-red-100 dark:border-red-900/50">
                                 <span className="material-symbols-outlined text-sm">error</span>
                                 {error}
                             </div>
@@ -117,7 +144,7 @@ export default function Login() {
 
                     <div className="mt-7 text-center">
                         <p className="text-sm text-gray-500 dark:text-gray-400">
-                            Nao tem uma conta?{' '}
+                            Não tem uma conta?{' '}
                             <Link to="/register" className="text-primary font-bold hover:underline">
                                 Cadastre-se
                             </Link>

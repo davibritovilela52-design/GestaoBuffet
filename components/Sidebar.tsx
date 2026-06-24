@@ -15,6 +15,7 @@ const Sidebar = () => {
   if (!user) return null;
 
   const isAdmin = user.role === UserRole.ADMIN;
+  const eventsLabel = isAdmin ? 'Funil de Vendas' : 'Oportunidades';
 
   return (
     <aside className="app-sidebar w-72 flex flex-col">
@@ -34,15 +35,15 @@ const Sidebar = () => {
         </div>
 
         <nav className="flex flex-col gap-2 flex-grow">
-          <NavLink to="/dashboard" className={linkClass}>
+          <NavLink to="/dashboard" className={linkClass} aria-label="Painel">
             <span className="material-symbols-outlined text-[24px]">dashboard</span>
             <span className="sidebar-label text-sm font-bold">Painel</span>
           </NavLink>
-          <NavLink to="/events" className={linkClass}>
+          <NavLink to="/events" className={linkClass} aria-label={eventsLabel}>
             <span className="material-symbols-outlined text-[24px]">view_kanban</span>
-            <span className="sidebar-label text-sm font-bold">{isAdmin ? 'Funil de Vendas' : 'Oportunidades'}</span>
+            <span className="sidebar-label text-sm font-bold">{eventsLabel}</span>
           </NavLink>
-          <NavLink to="/deals/closed" className={linkClass}>
+          <NavLink to="/deals/closed" className={linkClass} aria-label="Fechados e agenda">
             <span className="material-symbols-outlined text-[24px]">calendar_today</span>
             <span className="sidebar-label text-sm font-bold">Fechados / Agenda</span>
           </NavLink>
@@ -50,20 +51,20 @@ const Sidebar = () => {
           {isAdmin && (
             <>
               <div className="my-2 border-t border-gray-100 dark:border-gray-800"></div>
-              <p className="sidebar-section px-3 text-xs font-black text-gray-400 uppercase">Gestao</p>
-              <NavLink to="/staffing" className={linkClass}>
+              <p className="sidebar-section px-3 text-xs font-black text-gray-400 uppercase">Gestão</p>
+              <NavLink to="/staffing" className={linkClass} aria-label="Equipe">
                 <span className="material-symbols-outlined text-[24px]">group</span>
                 <span className="sidebar-label text-sm font-bold">Equipe</span>
               </NavLink>
-              <NavLink to="/financials" className={linkClass}>
+              <NavLink to="/financials" className={linkClass} aria-label="Financeiro">
                 <span className="material-symbols-outlined text-[24px]">account_balance_wallet</span>
                 <span className="sidebar-label text-sm font-bold">Financeiro</span>
               </NavLink>
 
               <div className="my-2 border-t border-gray-100 dark:border-gray-800"></div>
-              <NavLink to="/settings" className={linkClass}>
+              <NavLink to="/settings" className={linkClass} aria-label="Configurações">
                 <span className="material-symbols-outlined text-[24px]">settings</span>
-                <span className="sidebar-label text-sm font-bold">Configuracoes</span>
+                <span className="sidebar-label text-sm font-bold">Configurações</span>
               </NavLink>
             </>
           )}
@@ -72,10 +73,11 @@ const Sidebar = () => {
         {isAdmin && (
           <Link
             to="/public-request"
+            aria-label="Abrir formulário público"
             className="sidebar-cta btn-primary w-full text-sm font-bold py-3 rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95"
           >
             <span className="material-symbols-outlined text-[18px]">add</span>
-            <span>Formulario Publico</span>
+            <span>Formulário Público</span>
           </Link>
         )}
       </div>

@@ -17,13 +17,31 @@ export default function Landing() {
                             </div>
                             <span className="font-bold text-xl tracking-tight">GestãoBuffet</span>
                         </div>
-                        <div className="flex items-center gap-4 hidden sm:flex">
+                        <div className="hidden sm:flex items-center gap-4">
                             <Link to="/login" className="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">
                                 {user ? 'Acessar Painel' : 'Entrar'}
                             </Link>
                             {!user && (
                                 <Link to="/register" className="bg-primary hover:bg-primary/90 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all active:scale-95 shadow-lg shadow-primary/25 hover:shadow-primary/40">
                                     Criar Conta
+                                </Link>
+                            )}
+                        </div>
+                        <div className="sm:hidden flex items-center gap-2">
+                            <Link
+                                to={user ? '/dashboard' : '/login'}
+                                aria-label={user ? 'Acessar painel' : 'Entrar no sistema'}
+                                className="h-10 w-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center"
+                            >
+                                <span className="material-symbols-outlined text-[20px]">{user ? 'dashboard' : 'login'}</span>
+                            </Link>
+                            {!user && (
+                                <Link
+                                    to="/register"
+                                    aria-label="Criar conta"
+                                    className="h-10 w-10 rounded-xl bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/25"
+                                >
+                                    <span className="material-symbols-outlined text-[20px]">person_add</span>
                                 </Link>
                             )}
                         </div>
@@ -216,9 +234,9 @@ export default function Landing() {
                             <span className="font-bold text-white text-lg">GestãoBuffet</span>
                         </div>
                         <div className="flex gap-8 text-sm font-medium">
-                            <a href="#" className="hover:text-white transition-colors">Termos de Uso</a>
-                            <a href="#" className="hover:text-white transition-colors">Privacidade</a>
-                            <a href="#" className="hover:text-white transition-colors">Contato</a>
+                            <a href="#features" className="hover:text-white transition-colors">Recursos</a>
+                            <Link to="/login" className="hover:text-white transition-colors">Acessar sistema</Link>
+                            <Link to="/register" className="hover:text-white transition-colors">Criar Conta</Link>
                         </div>
                         <div className="text-sm">
                             © 2024 GestãoBuffet. Todos os direitos reservados.

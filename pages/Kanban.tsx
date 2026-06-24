@@ -139,15 +139,16 @@ function Column({ title, status, deals, color, isAdmin, user, onMove, onEdit, on
 
                     <div className="flex flex-col gap-3 min-h-[100px]">
                         {columnDeals.map((deal: Deal, index: number) => (
-                            <Draggable key={deal.id} draggableId={deal.id} index={index} isDragDisabled={!isAdmin}>
-                                {(provided, snapshot) => (
-                                    <div
-                                        ref={provided.innerRef}
-                                        {...(isAdmin ? provided.draggableProps : {})}
-                                        {...(isAdmin ? provided.dragHandleProps : {})}
-                                        style={{ ...provided.draggableProps.style }}
-                                        className={`deal-card p-4 flex flex-col gap-3 group transition-all ${isAdmin ? 'cursor-grab active:cursor-grabbing' : ''} ${snapshot.isDragging ? 'shadow-2xl ring-2 ring-primary rotate-1 z-50 scale-105' : 'hover:border-primary/30 hover:-translate-y-0.5'}`}
-                                    >
+                            <React.Fragment key={deal.id}>
+                                <Draggable draggableId={deal.id} index={index} isDragDisabled={!isAdmin}>
+                                    {(provided, snapshot) => (
+                                        <div
+                                            ref={provided.innerRef}
+                                            {...(isAdmin ? provided.draggableProps : {})}
+                                            {...(isAdmin ? provided.dragHandleProps : {})}
+                                            style={{ ...provided.draggableProps.style }}
+                                            className={`deal-card p-4 flex flex-col gap-3 group transition-all ${isAdmin ? 'cursor-grab active:cursor-grabbing' : ''} ${snapshot.isDragging ? 'shadow-2xl ring-2 ring-primary rotate-1 z-50 scale-105' : 'hover:border-primary/30 hover:-translate-y-0.5'}`}
+                                        >
                                         {(() => {
                                             const isAlreadyAssigned = !isAdmin && deal.assignments?.some((a: any) => a.userId === user.id);
                                             return (
@@ -206,22 +207,63 @@ function Column({ title, status, deals, color, isAdmin, user, onMove, onEdit, on
                                             );
                                         })()}
 
-                                        {/* Admin Controls (Buttons) - kept as backup accessibility options, but can be removed if strictly DND */}
-                                        {isAdmin && (
-                                            <div className="flex justify-between items-center mt-2 pt-2 border-t border-gray-100 dark:border-gray-800 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <span className="text-[10px] text-gray-400">Arraste para mover</span>
-                                                <button
-                                                    onClick={() => onEdit(deal)}
-                                                    className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded text-gray-400 hover:text-primary transition-colors"
-                                                    title="Editar"
-                                                >
-                                                    <span className="material-symbols-outlined text-sm">edit</span>
-                                                </button>
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-                            </Draggable>
+                                        {isAdmin && (() => {
+                                            const prevStatus = getPrevStatus(status);
+                                            const nextStatus = getNextStatus(status);
+                                            const canMovePrev = prevStatus !== status;
+                                            const canMoveNext = nextStatus !== status;
+
+                                            return (
+                                                <div className="flex justify-between items-center gap-2 mt-2 pt-2 border-t border-gray-100 dark:border-gray-800 opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 transition-opacity">
+                                                    <span className="text-[10px] text-gray-400">Mover etapa</span>
+                                                    <div className="flex items-center gap-1">
+                                                        <button
+                                                            type="button"
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                e.stopPropagation();
+                                                                if (canMovePrev) onMove(deal.id, prevStatus);
+                                                            }}
+                                                            disabled={!canMovePrev}
+                                                            aria-label={`Mover ${deal.eventName} para a etapa anterior`}
+                                                            className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-primary disabled:opacity-35 disabled:hover:bg-transparent disabled:hover:text-gray-400 dark:hover:bg-gray-800 transition-colors"
+                                                        >
+                                                            <span className="material-symbols-outlined text-sm">arrow_back</span>
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                e.stopPropagation();
+                                                                if (canMoveNext) onMove(deal.id, nextStatus);
+                                                            }}
+                                                            disabled={!canMoveNext}
+                                                            aria-label={`Mover ${deal.eventName} para a próxima etapa`}
+                                                            className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-primary disabled:opacity-35 disabled:hover:bg-transparent disabled:hover:text-gray-400 dark:hover:bg-gray-800 transition-colors"
+                                                        >
+                                                            <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                e.stopPropagation();
+                                                                onEdit(deal);
+                                                            }}
+                                                            className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg text-gray-400 hover:text-primary transition-colors"
+                                                            aria-label={`Editar ${deal.eventName}`}
+                                                            title="Editar"
+                                                        >
+                                                            <span className="material-symbols-outlined text-sm">edit</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })()}
+                                        </div>
+                                    )}
+                                </Draggable>
+                            </React.Fragment>
                         ))}
                         {provided.placeholder}
                     </div>

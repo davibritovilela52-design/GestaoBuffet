@@ -105,12 +105,12 @@ export default function PublicForm() {
                     <div className="mx-auto mb-4 size-12 rounded-full bg-red-50 text-red-600 flex items-center justify-center">
                         <span className="material-symbols-outlined">link_off</span>
                     </div>
-                    <h1 className="text-xl font-black text-gray-900 mb-2">Link de solicitacao invalido</h1>
+                    <h1 className="text-xl font-black text-gray-900 mb-2">Link de solicitação inválido</h1>
                     <p className="text-sm text-gray-500 mb-6">
-                        Peca ao buffet um novo link de orcamento para enviar sua solicitacao.
+                        Peça ao buffet um novo link de orçamento para enviar sua solicitação.
                     </p>
                     <Link to="/" className="inline-flex items-center justify-center rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white hover:bg-primary/90">
-                        Voltar
+                        Voltar para o início
                     </Link>
                 </div>
             </div>
@@ -121,7 +121,7 @@ export default function PublicForm() {
         <div className="min-h-screen bg-gray-50 text-[#111418] relative">
             {/* Toast Notification */}
             {toast && (
-                <div className={`fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-xl border flex items-center gap-3 animate-bounce-in ${toast.type === 'success' ? 'bg-white border-green-200 text-green-700' : 'bg-white border-red-200 text-red-700'
+                <div role={toast.type === 'success' ? 'status' : 'alert'} className={`fixed top-4 right-4 z-50 px-6 py-4 rounded-lg shadow-xl border flex items-center gap-3 animate-bounce-in ${toast.type === 'success' ? 'bg-white border-green-200 text-green-700' : 'bg-white border-red-200 text-red-700'
                     }`}>
                     <span className="material-symbols-outlined">{toast.type === 'success' ? 'check_circle' : 'error'}</span>
                     <span className="font-bold text-sm">{toast.message}</span>
@@ -153,17 +153,17 @@ export default function PublicForm() {
                                     Dados Pessoais
                                 </h3>
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-1">Nome Completo <span className="text-red-500">*</span></label>
-                                    <input required name="fullName" value={formData.fullName} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Seu nome completo" />
+                                    <label htmlFor="public-full-name" className="block text-sm font-bold text-gray-700 mb-1">Nome Completo <span className="text-red-500">*</span></label>
+                                    <input id="public-full-name" required name="fullName" autoComplete="name" value={formData.fullName} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Seu nome completo" />
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-1">Email <span className="text-red-500">*</span></label>
-                                        <input required name="email" type="email" value={formData.email} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="seu@email.com" />
+                                        <label htmlFor="public-email" className="block text-sm font-bold text-gray-700 mb-1">Email <span className="text-red-500">*</span></label>
+                                        <input id="public-email" required name="email" type="email" autoComplete="email" value={formData.email} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="seu@email.com" />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-1">Telefone <span className="text-red-500">*</span></label>
-                                        <input required name="phone" type="tel" value={formData.phone} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="(00) 00000-0000" />
+                                        <label htmlFor="public-phone" className="block text-sm font-bold text-gray-700 mb-1">Telefone <span className="text-red-500">*</span></label>
+                                        <input id="public-phone" required name="phone" type="tel" autoComplete="tel" value={formData.phone} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="(00) 00000-0000" />
                                     </div>
                                 </div>
                             </div>
@@ -178,22 +178,22 @@ export default function PublicForm() {
                                 </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-1">Data <span className="text-red-500">*</span></label>
-                                        <input required name="date" type="date" value={formData.date} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+                                        <label htmlFor="public-date" className="block text-sm font-bold text-gray-700 mb-1">Data <span className="text-red-500">*</span></label>
+                                        <input id="public-date" required name="date" type="date" value={formData.date} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-1">Início <span className="text-red-500">*</span></label>
-                                        <input required name="startTime" type="time" value={formData.startTime} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+                                        <label htmlFor="public-start-time" className="block text-sm font-bold text-gray-700 mb-1">Início <span className="text-red-500">*</span></label>
+                                        <input id="public-start-time" required name="startTime" type="time" value={formData.startTime} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-1">Fim <span className="text-red-500">*</span></label>
-                                        <input required name="endTime" type="time" value={formData.endTime} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+                                        <label htmlFor="public-end-time" className="block text-sm font-bold text-gray-700 mb-1">Fim <span className="text-red-500">*</span></label>
+                                        <input id="public-end-time" required name="endTime" type="time" value={formData.endTime} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-1">Tipo de Evento <span className="text-red-500">*</span></label>
-                                        <select required name="type" value={formData.type} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
+                                        <label htmlFor="public-event-type" className="block text-sm font-bold text-gray-700 mb-1">Tipo de Evento <span className="text-red-500">*</span></label>
+                                        <select id="public-event-type" required name="type" value={formData.type} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
                                             <option value="">Selecione...</option>
                                             {Object.values(EventType).map(type => (
                                                 <option key={type} value={type}>{type}</option>
@@ -201,22 +201,22 @@ export default function PublicForm() {
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-1">Nº Convidados <span className="text-red-500">*</span></label>
-                                        <input required name="guests" type="number" min="1" value={formData.guests} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Ex: 150" />
+                                        <label htmlFor="public-guests" className="block text-sm font-bold text-gray-700 mb-1">Nº Convidados <span className="text-red-500">*</span></label>
+                                        <input id="public-guests" required name="guests" type="number" min="1" value={formData.guests} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Ex: 150" />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-1">Local do Evento <span className="text-red-500">*</span></label>
-                                        <input required name="location" value={formData.location} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Endereço ou local do evento" />
+                                        <label htmlFor="public-location" className="block text-sm font-bold text-gray-700 mb-1">Local do Evento <span className="text-red-500">*</span></label>
+                                        <input id="public-location" required name="location" autoComplete="street-address" value={formData.location} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Endereço ou local do evento" />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-bold text-gray-700 mb-1">Tipo do Espaço <span className="text-red-500">*</span></label>
-                                        <input required name="spaceType" value={formData.spaceType} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Ex: Salão, Sítio, Espaço aberto" />
+                                        <label htmlFor="public-space-type" className="block text-sm font-bold text-gray-700 mb-1">Tipo do Espaço <span className="text-red-500">*</span></label>
+                                        <input id="public-space-type" required name="spaceType" value={formData.spaceType} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Ex: Salão, Sítio, Espaço aberto" />
                                     </div>
 
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-1">Serviços Solicitados / Observações <span className="text-red-500">*</span></label>
-                                    <textarea required name="notes" rows={4} value={formData.notes} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Descreva o que você precisa: Equipe de cozinha, garçons, cardápio específico..."></textarea>
+                                    <label htmlFor="public-notes" className="block text-sm font-bold text-gray-700 mb-1">Serviços Solicitados / Observações <span className="text-red-500">*</span></label>
+                                    <textarea id="public-notes" required name="notes" rows={4} value={formData.notes} onChange={handleChange} className="w-full rounded-lg border-gray-300 bg-gray-50 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Descreva o que você precisa: Equipe de cozinha, garçons, cardápio específico..."></textarea>
                                 </div>
                             </div>
 

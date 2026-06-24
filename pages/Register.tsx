@@ -42,7 +42,7 @@ export default function Register() {
         setIsSubmitting(true);
 
         try {
-            await register(name, email, password);
+            await register(name.trim(), email.trim(), password);
             setSuccess('Cadastro realizado! Verifique seu email para confirmar a conta e depois faça login.');
             setTimeout(() => navigate('/login'), 3000);
         } catch (err: any) {
@@ -65,60 +65,76 @@ export default function Register() {
                     <p className="text-gray-500 text-sm mt-1">Comece a gerenciar seu buffet hoje</p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                     <div>
-                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Nome</label>
+                        <label htmlFor="register-name" className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Nome</label>
                         <input
+                            id="register-name"
+                            name="name"
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             placeholder="Seu nome completo"
                             className="w-full rounded-lg border-gray-300 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                            autoComplete="name"
+                            required
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                        <label htmlFor="register-email" className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Email</label>
                         <input
+                            id="register-email"
+                            name="email"
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="seu@email.com"
                             className="w-full rounded-lg border-gray-300 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                            autoComplete="email"
+                            required
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Senha</label>
+                        <label htmlFor="register-password" className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Senha</label>
                         <input
+                            id="register-password"
+                            name="password"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Mínimo 6 caracteres"
                             className="w-full rounded-lg border-gray-300 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                            autoComplete="new-password"
+                            required
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Confirmar Senha</label>
+                        <label htmlFor="register-confirm-password" className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Confirmar Senha</label>
                         <input
+                            id="register-confirm-password"
+                            name="confirmPassword"
                             type="password"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             placeholder="Repita a senha"
                             className="w-full rounded-lg border-gray-300 p-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
+                            autoComplete="new-password"
+                            required
                         />
                     </div>
 
                     {error && (
-                        <div className="p-3 bg-red-50 text-red-600 text-xs font-bold rounded-lg flex items-center gap-2">
+                        <div role="alert" className="p-3 bg-red-50 text-red-600 text-xs font-bold rounded-lg flex items-center gap-2">
                             <span className="material-symbols-outlined text-sm">error</span>
                             {error}
                         </div>
                     )}
 
                     {success && (
-                        <div className="p-3 bg-green-50 text-green-600 text-xs font-bold rounded-lg flex items-center gap-2">
+                        <div role="status" className="p-3 bg-green-50 text-green-600 text-xs font-bold rounded-lg flex items-center gap-2">
                             <span className="material-symbols-outlined text-sm">check_circle</span>
                             {success}
                         </div>
